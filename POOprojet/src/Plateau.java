@@ -18,8 +18,8 @@ public class Plateau {
                 if(b instanceof Obstacle){
                     System.out.print(" "+b.toString()+" ");
                 }
-                System.out.print(" |");
             }
+            System.out.println(" |");
         }
     }
 
