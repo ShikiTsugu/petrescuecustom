@@ -13,10 +13,10 @@ public class Plateau {
                     System.out.print(" "+b.toString()+" ");
                 }
                 if(b instanceof Bloc){
-                    System.out.print(" "+b.toString()+" ");
+                    System.out.print(b.toString());
                 }
                 if(b instanceof Obstacle){
-                    System.out.print(" "+b.toString()+" ");
+                    System.out.print(b.toString());
                 }
             }
             System.out.println(" |");
