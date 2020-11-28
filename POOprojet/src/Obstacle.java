@@ -1,2 +1,2 @@
-public class Obstacle extends Cube {
+public class Obstacle {
 }
