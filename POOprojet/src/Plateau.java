@@ -10,13 +10,13 @@ public class Plateau {
             System.out.print("| ");
             for(Cube b : c){
                 if(b instanceof Animaux){
-                    System.out.print(" A ");
+                    System.out.print(" "+b.getColor()+" ");
                 }
                 if(b instanceof Bloc){
                     System.out.print(" "+b.getColor()+" ");
                 }
                 if(b instanceof Obstacle){
-                    System.out.print(" X ");
+                    System.out.print(" "+b.getColor()+" ");
                 }
                 System.out.print(" |");
             }

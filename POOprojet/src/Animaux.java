@@ -2,10 +2,10 @@ public class Animaux extends Cube{
 	
 	private String type;
 	
-	public Animaux(int x, int y, String s) {
+	public Animaux(int x, int y) {
 		super.x = x;
 		super.y = y;
-		type = s;
+		type = "A";
 	}
 	
 	public String getType() {
