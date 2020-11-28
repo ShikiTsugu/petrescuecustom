@@ -15,5 +15,8 @@ public class Animaux extends Cube{
 	public void setType(String s) {
 		type = s;
 	}
-	
+
+	public String getColor() {
+		return type;
+	}
 }

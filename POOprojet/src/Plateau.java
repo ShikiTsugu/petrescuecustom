@@ -13,7 +13,7 @@ public class Plateau {
                     System.out.print(" A ");
                 }
                 if(b instanceof Bloc){
-                    System.out.print(" "+Bloc.getColor()+" ");
+                    System.out.print(" "+b.getColor()+" ");
                 }
                 if(b instanceof Obstacle){
                     System.out.print(" X ");
