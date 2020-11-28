@@ -27,8 +27,17 @@ public class Plateau {
     }
 
     public void affiche(){
+        char l = 'A';
+        int n = 1;
+        System.out.print("    ");
+        for(int i = 0; i< cubes.length; i++){
+            System.out.print(n+"  ");
+            n++;
+        }
+        System.out.println();
         for(Cube[] c : cubes){
-            System.out.print("| ");
+            System.out.print(l+" |");
+            l++;
             for(Cube b : c){
                 if(b!=null) {
                     if (b instanceof Animaux) System.out.print(" " + b.toString() + " ");
@@ -36,7 +45,7 @@ public class Plateau {
                     if (b instanceof Obstacle) System.out.print(b.toString());
                 }else System.out.print("   ");
             }
-            System.out.println(" |");
+            System.out.println("|");
         }
     }
 
