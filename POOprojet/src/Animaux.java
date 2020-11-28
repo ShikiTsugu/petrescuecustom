@@ -16,7 +16,7 @@ public class Animaux extends Cube{
 		type = s;
 	}
 
-	public String getColor() {
+	public String toString() {
 		return type;
 	}
 }

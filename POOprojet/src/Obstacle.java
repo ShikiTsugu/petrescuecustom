@@ -7,7 +7,7 @@ public class Obstacle extends Cube{
 		type = "X";
 	}
 
-	public String getColor() {
+	public String toString() {
 		return type;
 	}
 }
