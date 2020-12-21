@@ -12,8 +12,8 @@ public class Joueur {
 			char c1 = s.charAt(0);
 			char c2 = s.charAt(1);
 			if (Character.isUpperCase(c1) && Character.isDigit(c2)) {
-				coord[0] = c1-64;
-				coord[1] = Character.getNumericValue(c2);
+				coord[0] = c1-65;
+				coord[1] = Character.getNumericValue(c2)-1;
 				return coord;
 			} else {
 				coord[0] = -1;
