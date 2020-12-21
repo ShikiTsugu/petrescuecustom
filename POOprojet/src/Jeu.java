@@ -13,5 +13,7 @@ public class Jeu {
         System.out.println(p.colVide(2));
         p.miseAJour();
         p.affiche();
+        Niveaux n1 = new Niveaux(p);
+        System.out.println(n1);
     }
 }
