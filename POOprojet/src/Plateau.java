@@ -1,8 +1,11 @@
 public class Plateau {
+	
     private Cube[][] cubes;
+    private Joueur joueur;
 
     public Plateau(Cube[][] c){
         cubes = c;
+        joueur = new Joueur();
     }
 
     public Cube[][] getCubes(){
@@ -82,6 +85,77 @@ public class Plateau {
             }
             System.out.println("|");
         }
+    }
+    
+    //supprime le bloc choisi et les blocs autour
+    public void supprimer(){
+    	int[] coord = joueur.Coord();
+    	int x = coord[0];
+    	int y = coord[1];
+    	if (x != -1 && y != -1 && cubes[x][y] instanceof Bloc) {
+    		Bloc b = getBloc(x,y);
+    		if(VerifSeul(x, y, b)) {
+    			supprimerAux(x, y, b);
+    		} else {
+    			System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
+    		}
+    	} else {
+    		System.out.println("Ceci n'est pas un bloc");
+    	}
+    }
+    
+    
+    public void supprimerAux(int x, int y, Cube c) {
+		cubes[x][y] = null;
+    	if (!outOfBound(x,y)) {
+	    	if(c.equals(getBloc(x-1,y))) {		
+	        	supprimerAux(x-1, y, c);
+	    	} else if(c.equals(getBloc(x,y-1))) {
+	    		supprimerAux(x, y-1, c);
+	    	} else if(c.equals(getBloc(x+1,y))) {
+	    		supprimerAux(x+1, y, c);
+	    	} else if(c.equals(getBloc(x,y+1))) {
+		    	supprimerAux(x, y+1, c);
+	    	}
+    	}
+    }
+    
+    public boolean VerifSeul(int x, int y, Cube c) {
+    	Cube g = null;
+    	Cube h = null;
+    	Cube d = null;
+    	Cube b = null;
+    	if(x > 0) {
+    		g = getBloc(x-1,y);
+    	}
+    	if(y > 0) {
+    		h = getBloc(x,y-1);
+    	}
+    	if(x < cubes.length-1) {
+    		d = getBloc(x+1,y);
+    	}
+    	if(y < cubes[x].length-1) {
+    		b = getBloc(x,y+1);
+    	}
+    	if(c.equals(g) || c.equals(h) || c.equals(d) || c.equals(b)) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public Bloc getBloc(int x, int y) {
+    	if (!outOfBound(x,y)) {
+	    	if (cubes[x][y] instanceof Bloc) {
+	    		return (Bloc)cubes[x][y];
+	    	}
+    	}
+    	return null;
+    }
+    
+    public boolean outOfBound(int x, int y) {
+    	if(x < 0 || x > cubes.length-1 || y < 0 || y > cubes[x].length-1)
+    		return true;
+    	return false;
     }
 
 }
