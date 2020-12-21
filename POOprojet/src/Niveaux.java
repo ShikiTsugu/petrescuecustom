@@ -16,9 +16,11 @@ public class Niveaux {
     public boolean clear(){
         for(Cube[] c : plateau.getCubes()){
             for(Cube d : c){
-                if(d instanceof Animaux){
-                    return false;
-                }
+                try {
+                    if (d instanceof Animaux) {
+                        return false;
+                    }
+                }catch(NullPointerException e){}
             }
         }
         clear = true;
