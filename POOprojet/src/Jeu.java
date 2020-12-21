@@ -32,9 +32,10 @@ public class Jeu {
 
     public static void main(String[] args){
         Jeu j = new Jeu();
-        for(Niveaux n : j.getNiv()){
-            n.getPlateau().affiche();
-            System.out.println(n);
-        }
+        Plateau p1 = j.getNiv().get(0).getPlateau();
+        p1.affiche();
+        p1.supprimer();
+        p1.miseAJour();
+        p1.affiche();
     }
 }
