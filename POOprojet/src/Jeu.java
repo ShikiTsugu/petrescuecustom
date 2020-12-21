@@ -31,6 +31,12 @@ public class Jeu {
     }
 
     public static void main(String[] args){
+        System.out.println("\n" +
+                "  ___     _     ___                       ___                 \n" +
+                " | _ \\___| |_  | _ \\___ ___ __ _  _ ___  / __| __ _ __ _ __ _ \n" +
+                " |  _/ -_)  _| |   / -_|_-</ _| || / -_) \\__ \\/ _` / _` / _` |\n" +
+                " |_| \\___|\\__| |_|_\\___/__/\\__|\\_,_\\___| |___/\\__,_\\__, \\__,_|\n" +
+                "                                                   |___/      \n");
         Jeu j = new Jeu();
         Plateau p1 = j.getNiv().get(0).getPlateau();
         p1.affiche();
