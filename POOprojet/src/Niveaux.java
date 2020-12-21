@@ -12,6 +12,10 @@ public class Niveaux {
         score = 0;
     }
 
+    public Plateau getPlateau(){
+        return plateau;
+    }
+
     //test si le niveau est terminé, si oui alors le boolean clear devient true
     public boolean clear(){
         for(Cube[] c : plateau.getCubes()){
