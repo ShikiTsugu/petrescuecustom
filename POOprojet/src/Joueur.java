@@ -5,6 +5,7 @@ public class Joueur {
 	Scanner sc = new Scanner(System.in);
 	
 	public int[] Coord() {
+		System.out.println("Entrez vos coordonées :");
 		String s = sc.next();
 		int[] coord = {-1,-1};
 		if (s.length() == 2) {
