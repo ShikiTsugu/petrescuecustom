@@ -65,7 +65,7 @@ public class Plateau {
         char l = 'A';
         int n = 1;
         System.out.print("    ");
-        for(int i = 0; i< cubes.length; i++){
+        for(Cube c : cubes[0]){
             System.out.print(n+"  ");
             n++;
         }
