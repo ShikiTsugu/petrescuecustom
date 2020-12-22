@@ -12,6 +12,37 @@ public class Plateau {
         return cubes;
     }
 
+    //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
+    public int nbBlocInitial(){
+        int nbBloc = 0;
+        for(Cube[]c : cubes){
+            for(Cube d : c){
+                try{
+                    if(d!=null&&!(d instanceof Obstacle)){
+                        nbBloc++;
+                    }
+                }catch(NullPointerException e){}
+            }
+        }
+        return nbBloc;
+    }
+
+    //compte le nombre de bloc supprimé
+    public int nbBlocSuppr(){
+        int blocIni = nbBlocInitial();
+        int blocSuppr = 0;
+        for(Cube[]c : cubes){
+            for(Cube d : c){
+                try{
+                    if(d!=null&&!(d instanceof Obstacle)){
+                        blocSuppr++;
+                    }
+                }catch(NullPointerException e){}
+            }
+        }
+        return blocIni-blocSuppr;
+    }
+
     //test si la colonne passée en argument est vide ou pas
     public boolean colVide(int x){
         for(int i = 0; i<cubes.length; i++){
