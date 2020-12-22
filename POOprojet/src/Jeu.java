@@ -10,6 +10,7 @@ public class Jeu {
     private Cube a = new Animaux(0,0);
     private Cube o = new Obstacle(0,0);
     private final Joueur joueur;
+    private boolean valide;
 
     public Jeu(){
         joueur = new Joueur();
@@ -36,8 +37,12 @@ public class Jeu {
 
     public void montrerNiv(){
         System.out.println("Niveaux :");
-        for(Niveaux n : niveaux){
-            System.out.println(n);
+        for(int i = 0; i<niveaux.size(); i++){
+            if(niveaux.get(i).clear()) System.out.println(niveaux.get(i+1));
+            else {
+                System.out.println(niveaux.get(i));
+                break;
+            }
         }
     }
 
@@ -47,10 +52,24 @@ public class Jeu {
         System.out.println("\nChoisissez un niveau en entrant le numéro :");
         int n = sc.nextInt();
         for(Niveaux niv : niveaux){
-            if(n==niv.getNum()){
-                return niv;
+            if(n==niv.getNum()) {
+                if (niveaux.indexOf(niv) == 0) {
+                    valide = true;
+                    return niv;
+                }
+                else {
+                    if (niveaux.get(niveaux.indexOf(niv) - 1).clear()) {
+                        valide = true;
+                        return niv;
+                    } else if (!niveaux.get(niveaux.indexOf(niv) - 1).clear()) {
+                        valide = false;
+                        System.out.println("Niveau précédent non terminé.");
+                        return null;
+                    }
+                }
             }
         }
+        valide = false;
         System.out.println("Niveau inexistant.");
         return null;
     }
@@ -58,19 +77,23 @@ public class Jeu {
     public void jouer(){
         try{
             Niveaux niv = selectNiv();
-            Score s = new Score();
-            int score = 0;
-            System.out.println("Score : "+score);
-            niv.getPlateau().affiche();
-            while(!niv.clear()){
-                niv.getPlateau().supprimer();
-                s.calcul(niv.getPlateau().nbBlocSuppr());
-                score = s.getScore();
-                System.out.println("Score : "+score);
-                niv.getPlateau().miseAJour();
+            if(valide) {
+                Score s = new Score();
+                int score = 0;
+                System.out.println("Score : " + score);
+                niv.getPlateau().affiche();
+                while (!niv.clear()) {
+                    niv.getPlateau().supprimer();
+                    s.calcul(niv.getPlateau().nbBlocSuppr());
+                    score = s.getScore();
+                    System.out.println("Score : " + score);
+                    niv.getPlateau().miseAJour();
+                }
+                niv.meilleurScore(niv.calculScoreFinal());
+                System.out.println(niv);
+            }else{
+                jouer();
             }
-            niv.meilleurScore(niv.calculScoreFinal());
-            System.out.println(niv);
         }catch(NullPointerException e){
             jouer();
         }
