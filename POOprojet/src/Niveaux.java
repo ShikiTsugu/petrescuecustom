@@ -28,16 +28,6 @@ public class Niveaux {
         return true;
     }
 
-    //calcul le score final après avoir terminé le niveau
-    public int calculScoreFinal(){
-        Score s = new Score();
-        if(clear()){
-            s.calcul(plateau.nbBlocSuppr());
-            score = s.getScore()+plateau.getNbAnimIni()*1000;
-        }
-        return score;
-    }
-
     //met à jour le nouveau record selon si le nouveau score est supérieur à l'ancien
     public void meilleurScore(int s){
         if(s>score) score = s;
