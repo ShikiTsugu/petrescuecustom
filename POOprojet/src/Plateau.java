@@ -37,6 +37,25 @@ public class Plateau {
         }
         return nbAnim;
     }
+    
+    public int nbAnimauxSuppr() {
+    	int AnimSuppr = 0;
+    	int AnimCourant = nbAnimIni;
+        for(Cube[]c : cubes){
+            for(Cube d : c){
+                try{
+                    if(d instanceof Animaux){
+                    	AnimSuppr++;
+                    }
+                }catch(NullPointerException e){}
+            }
+        }
+        nbAnimIni = AnimSuppr;
+        if (AnimSuppr != 0) {
+        	miseAJour();
+        }
+        return AnimCourant - AnimSuppr;
+    }
 
     //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
     public int nbBlocInitial(){
@@ -56,6 +75,7 @@ public class Plateau {
     //compte le nombre de bloc supprimé
     public int nbBlocSuppr(){
         int blocSuppr = 0;
+        int blocCourant = blocIni;
         for(Cube[]c : cubes){
             for(Cube d : c){
                 try{
@@ -65,7 +85,8 @@ public class Plateau {
                 }catch(NullPointerException e){}
             }
         }
-        return blocIni-blocSuppr;
+        blocIni = blocSuppr;
+        return blocCourant-blocSuppr;
     }
 
     //test si la colonne passée en argument est vide ou pas
@@ -117,7 +138,7 @@ public class Plateau {
                 faireDescendre(j);
             }
         }
-        affiche();
+        detectAnimaux();
     }
 
     //affiche le plateau
@@ -162,24 +183,22 @@ public class Plateau {
     }
     
     
-    public int supprimerAux(int x, int y, Cube c) {
+    public void supprimerAux(int x, int y, Cube c) {
 		cubes[x][y] = null;
-		int i = 1;
     	if (!outOfBound(x,y)) {
 	    	if(c.equals(getBloc(x-1,y))) {		
-	        	i = i + supprimerAux(x-1, y, c);
+	        	supprimerAux(x-1, y, c);
 	    	}
 	    	if(c.equals(getBloc(x,y-1))) {
-	    		i = i + supprimerAux(x, y-1, c);
+	    		supprimerAux(x, y-1, c);
 	    	}
 	    	if(c.equals(getBloc(x+1,y))) {
-	    		i = i + supprimerAux(x+1, y, c);
+	    		supprimerAux(x+1, y, c);
 	    	}
 	    	if(c.equals(getBloc(x,y+1))) {
-	    		i = i + supprimerAux(x, y+1, c);
+	    		supprimerAux(x, y+1, c);
 	    	}
     	}
-    	return i;
     }
     
     public boolean VerifSeul(int x, int y, Cube c) {
@@ -218,6 +237,14 @@ public class Plateau {
     	if(x < 0 || x > cubes.length-1 || y < 0 || y > cubes[x].length-1)
     		return true;
     	return false;
+    }
+    
+    public void detectAnimaux() {
+    	for(int i = 0; i < cubes[cubes.length-1].length-1; i++) {
+    		if (cubes[cubes.length-1][i] instanceof Animaux) {
+    			cubes[cubes.length-1][i] = null;
+    		}
+    	}
     }
 
 }

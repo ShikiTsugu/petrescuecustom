@@ -12,6 +12,10 @@ public class Score {
 		score = score + i*i*10;
 	}
 	
+	public void animauxPoint(int i) {
+		score = score + i*1000;
+	}
+	
 	public void affiche() {
 		System.out.println("Score = " + score);
 	}

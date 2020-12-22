@@ -85,9 +85,11 @@ public class Jeu {
                 while (!niv.clear()) {
                     niv.getPlateau().supprimer();
                     s.calcul(niv.getPlateau().nbBlocSuppr());
+                    niv.getPlateau().miseAJour();
+                    s.animauxPoint(niv.getPlateau().nbAnimauxSuppr());
                     score = s.getScore();
                     System.out.println("Score : " + score);
-                    niv.getPlateau().miseAJour();
+                    niv.getPlateau().affiche();
                 }
                 niv.meilleurScore(niv.calculScoreFinal());
                 System.out.println(niv);

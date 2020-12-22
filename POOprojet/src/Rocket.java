@@ -17,6 +17,10 @@ public class Rocket {
 		return false;
 	}
 	
+	public void reset() {
+		compteur = 0;
+	}
+	
 	public void useRocket() {
 		if (available()) {
 			int[] coord = j.Coord();
@@ -27,6 +31,7 @@ public class Rocket {
 					p.setCube(i,y,null);
 				}
 			}
+			reset();
 		}
 	}
 	
