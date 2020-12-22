@@ -96,7 +96,7 @@ public class Plateau {
     //remplis la colonne vide par les elements à sa droite sauf les obstacles
     public void remplirCol(int x){
         if(x!=cubes.length-1) {
-            for (int i = 0; i < cubes.length-1; i++) {
+            for (int i = 0; i < cubes.length; i++) {
                 for (int j = x; j< cubes[i].length-1;j++) {
                     if(!(cubes[i][j+1] instanceof Obstacle)){
                         cubes[i][j] = cubes[i][j + 1];
