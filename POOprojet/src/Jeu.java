@@ -38,7 +38,9 @@ public class Jeu {
     public void montrerNiv(){
         System.out.println("Niveaux :");
         for(int i = 0; i<niveaux.size(); i++){
-            if(niveaux.get(i).clear()) System.out.println(niveaux.get(i+1));
+            if(niveaux.get(i).clear()) {
+                System.out.println(niveaux.get(i));
+            }
             else {
                 System.out.println(niveaux.get(i));
                 break;
@@ -92,7 +94,10 @@ public class Jeu {
                     niv.getPlateau().affiche();
                 }
                 niv.meilleurScore(score);
-                System.out.println(niv);
+                Scanner sc = new Scanner(System.in);
+                System.out.println(niv+"\nVoulez vous continuer ? Répondez par o si oui.");
+                String rep = sc.next();
+                if(rep.equals("o")) jouer();
             }else{
                 jouer();
             }
