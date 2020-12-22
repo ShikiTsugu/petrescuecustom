@@ -3,11 +3,17 @@ public class Plateau {
     private Cube[][] cubes;
     private Joueur joueur;
     private int blocIni;
+    private int nbAnimIni;
 
     public Plateau(Cube[][] c){
         cubes = c;
         joueur = new Joueur();
         blocIni = nbBlocInitial();
+        nbAnimIni = nbAnimaux();
+    }
+
+    public int getNbAnimIni(){
+        return nbAnimIni;
     }
 
     public Cube[][] getCubes(){
@@ -16,6 +22,20 @@ public class Plateau {
     
     public void setCube(int x, int y, Cube c) {
     	cubes[x][y] = c;
+    }
+
+    public int nbAnimaux(){
+        int nbAnim = 0;
+        for(Cube[]c : cubes){
+            for(Cube d : c){
+                try{
+                    if(d instanceof Animaux){
+                        nbAnim++;
+                    }
+                }catch(NullPointerException e){}
+            }
+        }
+        return nbAnim;
     }
 
     //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
@@ -97,6 +117,7 @@ public class Plateau {
                 faireDescendre(j);
             }
         }
+        affiche();
     }
 
     //affiche le plateau

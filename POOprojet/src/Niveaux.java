@@ -12,23 +12,30 @@ public class Niveaux {
         score = 0;
     }
 
+    public int getNum(){ return niveau; }
+
     public Plateau getPlateau(){
         return plateau;
     }
 
     //test si le niveau est terminé, si oui alors le boolean clear devient true
     public boolean clear(){
-        for(Cube[] c : plateau.getCubes()){
-            for(Cube d : c){
-                try {
-                    if (d instanceof Animaux) {
-                        return false;
-                    }
-                }catch(NullPointerException e){}
-            }
+        if(plateau.nbAnimaux()!=0){
+            clear = false;
+            return false;
         }
         clear = true;
         return true;
+    }
+
+    //calcul le score final après avoir terminé le niveau
+    public int calculScoreFinal(){
+        Score s = new Score();
+        if(clear()){
+            s.calcul(plateau.nbBlocSuppr());
+            score = s.getScore()+plateau.getNbAnimIni()*1000;
+        }
+        return score;
     }
 
     //met à jour le nouveau record selon si le nouveau score est supérieur à l'ancien
