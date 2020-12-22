@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Jeu {
-    private ArrayList<Niveaux> niveaux = new ArrayList<Niveaux>();
+    private ArrayList<Niveaux> niveaux;
     private Cube r = new Bloc(0,0,"R");
     private Cube g = new Bloc(0,0,"G");
     private Cube y = new Bloc(0,0,"Y");
     private Cube b = new Bloc(0,0,"B");
     private Cube a = new Animaux(0,0);
     private Cube o = new Obstacle(0,0);
+    private final Joueur joueur;
 
     public Jeu(){
+        joueur = new Joueur();
+        niveaux = new ArrayList<Niveaux>();
         Cube[][] c1 = {{null,a,null,null,null,a,null},{g,g,r,r,r,y,y},{g,g,b,b,b,y,y},{r,r,b,b,b,g,g},{r,r,b,b,b,g,g}
         ,{g,y,y,r,g,g,r},{g,y,y,r,g,g,r}};
         Plateau p1 = new Plateau(c1);
@@ -30,6 +34,42 @@ public class Jeu {
         return niveaux;
     }
 
+    public void montrerNiv(){
+        System.out.println("Niveaux :");
+        for(Niveaux n : niveaux){
+            System.out.println(n);
+        }
+    }
+
+    public Niveaux selectNiv(){
+        Scanner sc = new Scanner(System.in);
+        montrerNiv();
+        System.out.println("\nChoisissez un niveau en entrant le numéro :");
+        int n = sc.nextInt();
+        for(Niveaux niv : niveaux){
+            if(n==niv.getNum()){
+                return niv;
+            }
+        }
+        System.out.println("Niveau inexistant.");
+        return null;
+    }
+
+    public void jouer(){
+        try{
+            Niveaux niv = selectNiv();
+            niv.getPlateau().affiche();
+            while(!niv.clear()){
+                niv.getPlateau().supprimer();
+                niv.getPlateau().miseAJour();
+            }
+            niv.meilleurScore(niv.calculScoreFinal());
+            System.out.println(niv);
+        }catch(NullPointerException e){
+            jouer();
+        }
+    }
+
     public static void main(String[] args){
         System.out.println("\n" +
                 "  ___     _     ___                       ___                 \n" +
@@ -38,10 +78,6 @@ public class Jeu {
                 " |_| \\___|\\__| |_|_\\___/__/\\__|\\_,_\\___| |___/\\__,_\\__, \\__,_|\n" +
                 "                                                   |___/      \n");
         Jeu j = new Jeu();
-        Plateau p1 = j.getNiv().get(0).getPlateau();
-        p1.affiche();
-        p1.supprimer();
-        p1.miseAJour();
-        p1.affiche();
+        j.jouer();
     }
 }
