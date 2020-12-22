@@ -1,9 +1,11 @@
 public class Score {
 	
-	int score;
+	private int score;
 	
-	public Score() {
-		score = 0;
+	public Score() { score = 0; }
+
+	public int getScore(){
+		return score;
 	}
 	
 	public void calcul(int i){
