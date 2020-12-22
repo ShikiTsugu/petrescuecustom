@@ -1,19 +1,13 @@
 public class Animaux extends Cube{
 	
 	private String type;
+	private final int score;
 	
 	public Animaux(int x, int y) {
 		super.x = x;
 		super.y = y;
 		type = "A";
-	}
-	
-	public String getType() {
-		return type;
-	}
-	
-	public void setType(String s) {
-		type = s;
+		score = 1000;
 	}
 
 	public String toString() {
