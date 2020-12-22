@@ -105,19 +105,24 @@ public class Plateau {
     }
     
     
-    public void supprimerAux(int x, int y, Cube c) {
+    public int supprimerAux(int x, int y, Cube c) {
 		cubes[x][y] = null;
+		int i = 1;
     	if (!outOfBound(x,y)) {
 	    	if(c.equals(getBloc(x-1,y))) {		
-	        	supprimerAux(x-1, y, c);
-	    	} else if(c.equals(getBloc(x,y-1))) {
-	    		supprimerAux(x, y-1, c);
-	    	} else if(c.equals(getBloc(x+1,y))) {
-	    		supprimerAux(x+1, y, c);
-	    	} else if(c.equals(getBloc(x,y+1))) {
-		    	supprimerAux(x, y+1, c);
+	        	i = i + supprimerAux(x-1, y, c);
+	    	}
+	    	if(c.equals(getBloc(x,y-1))) {
+	    		i = i + supprimerAux(x, y-1, c);
+	    	}
+	    	if(c.equals(getBloc(x+1,y))) {
+	    		i = i + supprimerAux(x+1, y, c);
+	    	}
+	    	if(c.equals(getBloc(x,y+1))) {
+	    		i = i + supprimerAux(x, y+1, c);
 	    	}
     	}
+    	return i;
     }
     
     public boolean VerifSeul(int x, int y, Cube c) {
