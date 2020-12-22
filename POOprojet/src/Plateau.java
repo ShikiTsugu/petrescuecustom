@@ -103,11 +103,13 @@ public class Plateau {
     //fait descendre les blocs d'un cran s'il y a du vide
     public void faireDescendre(int x){
         int posNull=0;
+        //cherche la position null
         for(int i = 0; i< cubes.length; i++){
             if(cubes[i][x]==null){
                 posNull=i;
             }
         }
+        //parcourt de la colonne où se trouve la position null et fait descendre tous les éléments se trouvant au dessus de la position null
         for(int i = posNull; i>0 ; i--){
             cubes[i][x]=cubes[i-1][x];
             cubes[i-1][x]=null;
