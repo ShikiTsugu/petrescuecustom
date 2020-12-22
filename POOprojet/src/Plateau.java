@@ -13,6 +13,10 @@ public class Plateau {
     public Cube[][] getCubes(){
         return cubes;
     }
+    
+    public void setCube(int x, int y, Cube c) {
+    	cubes[x][y] = c;
+    }
 
     //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
     public int nbBlocInitial(){
