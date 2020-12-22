@@ -91,7 +91,7 @@ public class Jeu {
                     System.out.println("Score : " + score);
                     niv.getPlateau().affiche();
                 }
-                niv.meilleurScore(niv.calculScoreFinal());
+                niv.meilleurScore(score);
                 System.out.println(niv);
             }else{
                 jouer();
