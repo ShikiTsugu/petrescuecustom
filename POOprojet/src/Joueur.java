@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class Joueur {
 	
-	Scanner sc = new Scanner(System.in);
+	private Scanner sc;
 	
 	public int[] Coord() {
+		sc = new Scanner(System.in);
 		System.out.println("Entrez vos coordonées :");
 		String s = sc.next();
 		int[] coord = {-1,-1};
