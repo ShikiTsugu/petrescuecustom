@@ -2,10 +2,12 @@ public class Plateau {
 	
     private Cube[][] cubes;
     private Joueur joueur;
+    private int blocIni;
 
     public Plateau(Cube[][] c){
         cubes = c;
         joueur = new Joueur();
+        blocIni = nbBlocInitial();
     }
 
     public Cube[][] getCubes(){
@@ -29,7 +31,6 @@ public class Plateau {
 
     //compte le nombre de bloc supprimé
     public int nbBlocSuppr(){
-        int blocIni = nbBlocInitial();
         int blocSuppr = 0;
         for(Cube[]c : cubes){
             for(Cube d : c){
