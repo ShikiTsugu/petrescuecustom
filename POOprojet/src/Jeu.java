@@ -58,9 +58,15 @@ public class Jeu {
     public void jouer(){
         try{
             Niveaux niv = selectNiv();
+            Score s = new Score();
+            int score = 0;
+            System.out.println("Score : "+score);
             niv.getPlateau().affiche();
             while(!niv.clear()){
                 niv.getPlateau().supprimer();
+                s.calcul(niv.getPlateau().nbBlocSuppr());
+                score = s.getScore();
+                System.out.println("Score : "+score);
                 niv.getPlateau().miseAJour();
             }
             niv.meilleurScore(niv.calculScoreFinal());
