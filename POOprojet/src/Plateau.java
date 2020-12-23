@@ -37,22 +37,27 @@ public class Plateau {
         }
         return nbAnim;
     }
-    
+
+    public void detectAnimaux() {
+        for(int i = 0; i < cubes[cubes.length-1].length; i++) {
+            if (cubes[cubes.length-1][i] instanceof Animaux) {
+                cubes[cubes.length-1][i] = null;
+            }
+        }
+    }
+
     public int nbAnimauxSuppr() {
     	int AnimSuppr = 0;
-    	for(int i = 0; i< cubes.length; i++){
-    	    for(int j = 0; j< cubes[i].length; j++){
+        for(Cube[]c : cubes){
+            for(Cube d : c){
                 try{
-                    if(cubes[i][j] instanceof Animaux) {
-                        if(i==cubes.length-1){
-                            cubes[i][j] = null;
-                        }
+                    if(d instanceof Animaux){
                         AnimSuppr++;
                     }
-                    miseAJour();
                 }catch(NullPointerException e){}
             }
         }
+        miseAJour();
         return nbAnimIni-AnimSuppr;
     }
 
@@ -133,13 +138,13 @@ public class Plateau {
     public void miseAJour(){
         for(int i = 0; i<cubes.length; i++){
             for(int j = 0; j<cubes[i].length; j++) {
+                detectAnimaux();
                 if(colVide(j)){
                     remplirCol(j);
                 }
                 faireDescendre(j);
             }
         }
-        detectAnimaux();
     }
 
     //affiche le plateau
@@ -171,16 +176,20 @@ public class Plateau {
     	int[] coord = joueur.Coord();
     	int x = coord[0];
     	int y = coord[1];
-    	if (x != -1 && y != -1 && cubes[x][y] instanceof Bloc) {
-    		Bloc b = getBloc(x,y);
-    		if(VerifSeul(x, y, b)) {
-    			supprimerAux(x, y, b);
-    		} else {
-    			System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
-    		}
-    	} else {
-    		System.out.println("Ceci n'est pas un bloc");
-    	}
+    	try {
+            if (x != -1 && y != -1 && cubes[x][y] instanceof Bloc) {
+                Bloc b = getBloc(x, y);
+                if (VerifSeul(x, y, b)) {
+                    supprimerAux(x, y, b);
+                } else {
+                    System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
+                }
+            } else {
+                System.out.println("Ceci n'est pas un bloc");
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Coordonées non valide");
+        }
     }
     
     
@@ -239,13 +248,4 @@ public class Plateau {
     		return true;
     	return false;
     }
-    
-    public void detectAnimaux() {
-    	for(int i = 0; i < cubes[cubes.length-1].length-1; i++) {
-    		if (cubes[cubes.length-1][i] instanceof Animaux) {
-    			cubes[cubes.length-1][i] = null;
-    		}
-    	}
-    }
-
 }
