@@ -18,6 +18,10 @@ public class Niveaux {
         return plateau;
     }
 
+    public void setAsCleared(){
+        clear = true;
+    }
+
     //test si le niveau est terminé, si oui alors le boolean clear devient true
     public boolean clear(){
         if(plateau.nbAnimaux()!=0){
