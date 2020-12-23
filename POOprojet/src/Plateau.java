@@ -40,21 +40,20 @@ public class Plateau {
     
     public int nbAnimauxSuppr() {
     	int AnimSuppr = 0;
-    	int AnimCourant = nbAnimIni;
-        for(Cube[]c : cubes){
-            for(Cube d : c){
+    	for(int i = 0; i< cubes.length; i++){
+    	    for(int j = 0; j< cubes[i].length; j++){
                 try{
-                    if(d instanceof Animaux){
-                    	AnimSuppr++;
+                    if(cubes[i][j] instanceof Animaux) {
+                        if(i==cubes.length-1){
+                            cubes[i][j] = null;
+                        }
+                        AnimSuppr++;
                     }
+                    miseAJour();
                 }catch(NullPointerException e){}
             }
         }
-        nbAnimIni = AnimSuppr;
-        if (AnimSuppr != 0) {
-        	miseAJour();
-        }
-        return AnimCourant - AnimSuppr;
+        return nbAnimIni-AnimSuppr;
     }
 
     //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
