@@ -11,9 +11,4 @@ public class Bloc extends Cube {
 	public String toString() {
 		return "["+color+"]";
 	}
-	
-	public void setColor(String s) {
-		color = s;
-	}
-
 }
