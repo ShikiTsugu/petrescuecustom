@@ -129,7 +129,7 @@ public class Plateau {
                 for (int j = x; j< cubes[i].length-1;j++) {
                     if(!(cubes[i][j+1] instanceof Obstacle)){
                         cubes[i][j] = cubes[i][j + 1];
-                        cubes[i][j+1]=null;
+                        cubes[i][j + 1] = null;
                     }
                 }
             }
