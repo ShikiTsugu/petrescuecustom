@@ -158,7 +158,10 @@ public class Jeu {
                     "                                                   |___/      \n");
             Jeu j = new Jeu();
             j.jouer();
-        }else if(s.equals("G")){}
+        }else if(s.equals("G")){
+            JeuGraphique j = new JeuGraphique();
+            j.jouer();
+        }
         else System.out.println("Je n'ai pas compris");
     }
 }
