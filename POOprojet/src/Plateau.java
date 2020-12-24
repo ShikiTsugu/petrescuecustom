@@ -24,6 +24,15 @@ public class Plateau {
     	cubes[x][y] = c;
     }
 
+    public boolean vide(){
+        for(Cube[]c : cubes){
+            for(Cube d : c) {
+                if(d!=null&&!(d instanceof Obstacle)) return false;
+            }
+        }
+        return true;
+    }
+
     public int nbAnimaux(){
         int nbAnim = 0;
         for(Cube[]c : cubes){
