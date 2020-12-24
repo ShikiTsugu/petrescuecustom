@@ -115,8 +115,10 @@ public class Plateau {
         }
         //parcourt de la colonne où se trouve la position null et fait descendre tous les éléments se trouvant au dessus de la position null
         for(int i = posNull; i>0 ; i--){
-            cubes[i][x]=cubes[i-1][x];
-            cubes[i-1][x]=null;
+            if(!(cubes[i-1][x] instanceof Obstacle)) {
+                cubes[i][x] = cubes[i - 1][x];
+                cubes[i - 1][x] = null;
+            }
         }
     }
 
