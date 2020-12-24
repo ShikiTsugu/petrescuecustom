@@ -130,6 +130,7 @@ public class Jeu {
                     niv.getPlateau().miseAJour();
                     niv.getPlateau().affiche();
                 }
+                if(niv.getPlateau().vide())score+=10000;
                 niv.meilleurScore(score);
                 Scanner sc = new Scanner(System.in);
                 System.out.println(niv+"\nVoulez vous continuer ? Répondez par o si oui, n sinon.");
