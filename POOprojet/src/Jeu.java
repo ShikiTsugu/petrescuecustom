@@ -23,19 +23,17 @@ public class Jeu {
         Cube[][] c2 = {{null,p,a,p,null},{a,p,a,p,a},{r,y,a,y,r},{r,y,r,y,r},{y,p,r,p,y},{y,p,r,p,y},{p,y,r,y,p},{p,y,r,y,p}};
         Cube[][] c3 = {{null,null,a,null,a,null,a},{null,null,p,y,b,y,b},{null,null,p,y,b,y,b},{null,null,y,b,p,y,p},
                 {b,b,y,b,p,y,p},{p,b,b,p,b,p,b},{y,b,b,p,b,p,b},{p,p,y,b,y,o,o},{b,b,y,b,y,o,o}};
+        Cube[][] c4 = {{null,null,null,null,a,a,a,a},{null,null,null,p,p,y,p,r},{null,null,p,r,p,y,p,r},{null,p,p,r,y,r,y,y},{r,y,r,y,y,r,y,o},
+                {y,y,r,y,p,r,o,o},{r,r,p,r,p,o,o,o},{p,r,p,r,o,o,o,o}};
+        Cube[][] c5 = {{r,y,y,g,a,r,r,o,g},{g,r,r,a,g,r,g,o,g},{y,r,a,r,r,r,a,o,g},{y,o,o,o,o,o,o,o,p},{a,o,null,o,p,p,p,g,p},
+                {r,o,null,o,g,g,g,p,p},{a,o,null,o,g,g,p,g,p},{r,o,null,o,p,g,p,g,p},{y,o,null,o,g,p,g,g,g}};
 
         //Création des plateaux pour les niveaux
-        Plateau p1 = new Plateau(c1);
-        Plateau p2 = new Plateau(c2);
-        Plateau p3 = new Plateau(c3);
+        Plateau p1 = new Plateau(c1);Plateau p2 = new Plateau(c2);Plateau p3 = new Plateau(c3);Plateau p4 = new Plateau(c4);Plateau p5 = new Plateau(c5);
 
         //Création des niveaux et ajout des niveaux
-        Niveaux n1 = new Niveaux(p1);
-        Niveaux n2 = new Niveaux(p2);
-        Niveaux n3 = new Niveaux(p3);
-        niveaux.add(n1);
-        niveaux.add(n2);
-        niveaux.add(n3);
+        Niveaux n1 = new Niveaux(p1);Niveaux n2 = new Niveaux(p2);Niveaux n3 = new Niveaux(p3);Niveaux n4 = new Niveaux(p4);Niveaux n5 = new Niveaux(p5);
+        niveaux.add(n1);niveaux.add(n2);niveaux.add(n3);niveaux.add(n4);;niveaux.add(n5);
     }
 
     //montre la liste des niveaux débloqués, on affiche toujours le tout premier niveau
