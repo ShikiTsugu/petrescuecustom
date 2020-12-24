@@ -5,7 +5,7 @@ public class JeuGraphique {
     public void jouer(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                File f = new File("background.jpg");
+                File f = new File("background.png");
                 String s = f.getAbsolutePath();
                 IntGraphModel im = new IntGraphModel(s);
                 IntGraphView iv = new IntGraphView(im);
