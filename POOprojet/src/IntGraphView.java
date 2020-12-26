@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.ArrayList;
 
 public class IntGraphView extends JFrame {
@@ -17,7 +15,7 @@ public class IntGraphView extends JFrame {
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
     private IntGraphModel model;
-    private int scoreNiv=0,scouts=0;
+    private int scoreNiv,nbScouts;
     private final JeuGraphique jg = new JeuGraphique();
 
     public IntGraphView(IntGraphModel m){
@@ -76,11 +74,11 @@ public class IntGraphView extends JFrame {
             g.drawImage(model.getImage(),0,0,this);
         }
     }
-    
+
     public void jouer() {
         imagePane.removeAll();
-    	affichemenu();
-    	imagePane.updateUI();
+        affichemenu();
+        imagePane.updateUI();
     }
 
     public void niveau(){
@@ -102,12 +100,56 @@ public class IntGraphView extends JFrame {
         return plateau;
     }
 
+    public JButton couleurBloc(Bloc b, Niveaux n){
+        bt = new JButton();
+        if(b.getColor().equals("R")){
+            bt.setBorderPainted(false);
+            bt.setContentAreaFilled(false);
+            bt.setFocusPainted(false);
+            bt.setOpaque(false);
+            bt.setIcon(new ImageIcon("red.png"));
+        }
+        if(((Bloc) b).getColor().equals("G")){
+            bt.setBorderPainted(false);
+            bt.setContentAreaFilled(false);
+            bt.setFocusPainted(false);
+            bt.setOpaque(false);
+            bt.setIcon(new ImageIcon("green.png"));
+        }
+        if(((Bloc) b).getColor().equals("Y")){
+            bt.setBorderPainted(false);
+            bt.setContentAreaFilled(false);
+            bt.setFocusPainted(false);
+            bt.setOpaque(false);
+            bt.setIcon(new ImageIcon("yellow.png"));
+        }
+        if(((Bloc) b).getColor().equals("B")){
+            bt.setBorderPainted(false);
+            bt.setContentAreaFilled(false);
+            bt.setFocusPainted(false);
+            bt.setOpaque(false);
+            bt.setIcon(new ImageIcon("blue.png"));
+        }
+        if(((Bloc) b).getColor().equals("P")){
+            bt.setBorderPainted(false);
+            bt.setContentAreaFilled(false);
+            bt.setFocusPainted(false);
+            bt.setOpaque(false);
+            bt.setIcon(new ImageIcon("purple.png"));
+        }
+        bt.addActionListener((ActionEvent e) -> {
+            suppression(n);
+            n.getPlateau().miseAJour();
+            affichePlateau(initialisationPlateau(n),n);
+        });
+        return bt;
+    }
+
     public void affichePlateau(JPanel p, Niveaux n){
         imagePane.removeAll();
         scoreNiv = 0;
-        scouts = n.getPlateau().getNbAnimIni();
-        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
-        imagePane.setLayout(boxlayout);
+        nbScouts = n.getPlateau().getNbAnimIni();
+        imagePane.setLayout(new BorderLayout());
         for(Cube[] c : n.getPlateau().getCubes()){
             for(Cube b : c){
                 if(b!=null) {
@@ -121,47 +163,7 @@ public class IntGraphView extends JFrame {
                         p.add(a);
                     }
                     if (b instanceof Bloc) {
-                        bt = new JButton();
-                        if(((Bloc) b).getColor().equals("R")){
-                            bt.setBorderPainted(false);
-                            bt.setContentAreaFilled(false);
-                            bt.setFocusPainted(false);
-                            bt.setOpaque(false);
-                            bt.setIcon(new ImageIcon("red.png"));
-                            p.add(bt);
-                        }
-                        if(((Bloc) b).getColor().equals("G")){
-                            bt.setBorderPainted(false);
-                            bt.setContentAreaFilled(false);
-                            bt.setFocusPainted(false);
-                            bt.setOpaque(false);
-                            bt.setIcon(new ImageIcon("green.png"));
-                            p.add(bt);
-                        }
-                        if(((Bloc) b).getColor().equals("Y")){
-                            bt.setBorderPainted(false);
-                            bt.setContentAreaFilled(false);
-                            bt.setFocusPainted(false);
-                            bt.setOpaque(false);
-                            bt.setIcon(new ImageIcon("yellow.png"));
-                            p.add(bt);
-                        }
-                        if(((Bloc) b).getColor().equals("B")){
-                            bt.setBorderPainted(false);
-                            bt.setContentAreaFilled(false);
-                            bt.setFocusPainted(false);
-                            bt.setOpaque(false);
-                            bt.setIcon(new ImageIcon("blue.png"));
-                            p.add(bt);
-                        }
-                        if(((Bloc) b).getColor().equals("P")){
-                            bt.setBorderPainted(false);
-                            bt.setContentAreaFilled(false);
-                            bt.setFocusPainted(false);
-                            bt.setOpaque(false);
-                            bt.setIcon(new ImageIcon("purple.png"));
-                            p.add(bt);
-                        }
+                        p.add(couleurBloc((Bloc) b,n));
                     }
                     if (b instanceof Obstacle) {
                         JButton o = new JButton();
@@ -186,25 +188,49 @@ public class IntGraphView extends JFrame {
         }
         JPanel m = new JPanel();
         m.setOpaque(false);
-        m.setLayout(new GridLayout(2, 0));
+        m.setLayout(new BoxLayout(m,BoxLayout.Y_AXIS));
         JLabel score = new JLabel("Score : "+scoreNiv);
         score.setFont(new Font("Monospaced",Font.BOLD,20));
-        JLabel scout = new JLabel("Scouts : "+n.getPlateau().nbAnimauxSuppr()+"/"+scouts);
+        JLabel scout = new JLabel("Scouts : "+n.getPlateau().nbAnimauxSuppr()+"/"+nbScouts);
         scout.setFont(new Font("Monospaced",Font.BOLD,20));
         m.add(score);m.add(scout);
-        imagePane.add(m,BorderLayout.PAGE_START);
+        JPanel videHaut = new JPanel();
+        videHaut.setLayout(new BorderLayout());
+        videHaut.setPreferredSize(new Dimension(0,175));
+        videHaut.setOpaque(false);
+        videHaut.add(m, BorderLayout.LINE_START);
         JPanel videGauche = new JPanel();
-        videGauche.setSize(200,200);
-        videGauche.setPreferredSize(new Dimension(200,200));
+        videGauche.setPreferredSize(new Dimension(300,0));
         videGauche.setOpaque(false);
         JPanel videDroite = new JPanel();
-        videDroite.setSize(200,200);
-        videDroite.setPreferredSize(new Dimension(200,200));
+        videDroite.setPreferredSize(new Dimension(300,0));
         videDroite.setOpaque(false);
+        imagePane.add(videHaut, BorderLayout.PAGE_START);
         imagePane.add(videGauche, BorderLayout.WEST);
         imagePane.add(videDroite, BorderLayout.EAST);
         imagePane.add(p, BorderLayout.CENTER);
         imagePane.updateUI();
+    }
+
+    public void suppression(Niveaux n){
+        bt.addActionListener((ActionEvent e) -> {
+            int x = getMousePosition().x;
+            int y = getMousePosition().y;
+            try {
+                if (x != -1 && y != -1 && n.getPlateau().getCubes()[x][y] instanceof Bloc) {
+                    Bloc b = n.getPlateau().getBloc(x, y);
+                    if (n.getPlateau().VerifSeul(x, y, b)) {
+                        n.getPlateau().supprimerAux(x, y, b);
+                    } else {
+                        System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
+                    }
+                } else {
+                    System.out.println("Ceci n'est pas un bloc");
+                }
+            }catch(ArrayIndexOutOfBoundsException ex){
+                System.out.println("Coordonées non valide");
+            }
+        });
     }
 
     public void niveauxDispo(){
@@ -221,9 +247,9 @@ public class IntGraphView extends JFrame {
             }
         }
     }
-    
+
     public void affichemenu() {
-    	imagePane.removeAll();
+        imagePane.removeAll();
         for(JButton n : niveaux){
             n.setFont(new Font("Monospaced",Font.BOLD,20));
             n.setBackground(new Color(93,125,101));
@@ -258,5 +284,5 @@ public class IntGraphView extends JFrame {
         imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
         imagePane.add(retour);
     }
-    
+
 }
