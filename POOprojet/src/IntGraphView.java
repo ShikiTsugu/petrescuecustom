@@ -9,6 +9,7 @@ public class IntGraphView extends JFrame {
     private ImagePane imagePane;
     private JLabel titre = new JLabel();
     private JButton jouer,quitter;
+    private JButton bt = new JButton();
     private JButton niv1 = new JButton("Niveau 1");
     private JButton niv2 = new JButton("Niveau 2");
     private JButton niv3 = new JButton("Niveau 3");
@@ -31,6 +32,7 @@ public class IntGraphView extends JFrame {
     public void afficheIni(){
         setTitle("Scout Rescue Saga");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
 
         jouer = new JButton("Jouer");
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -102,6 +104,7 @@ public class IntGraphView extends JFrame {
 
     public void affichePlateau(JPanel p, Niveaux n){
         imagePane.removeAll();
+        imagePane.setLayout(new BorderLayout());
         for(Cube[] c : n.getPlateau().getCubes()){
             for(Cube b : c){
                 if(b!=null) {
@@ -115,7 +118,7 @@ public class IntGraphView extends JFrame {
                         p.add(a);
                     }
                     if (b instanceof Bloc) {
-                        JButton bt = new JButton();
+                        bt = new JButton();
                         if(((Bloc) b).getColor().equals("R")){
                             bt.setBorderPainted(false);
                             bt.setContentAreaFilled(false);
@@ -167,7 +170,7 @@ public class IntGraphView extends JFrame {
                         o.setIcon(new ImageIcon("obstacle.png"));
                         p.add(o);
                     }
-                }else {
+                }else{
                     JButton vide = new JButton();
                     vide.setBorderPainted(false);
                     vide.setContentAreaFilled(false);
@@ -178,9 +181,16 @@ public class IntGraphView extends JFrame {
                 }
             }
         }
-        JMenuBar m = new JMenuBar();
-        imagePane.add(m);
-        imagePane.add(p);
+        JPanel m = new JPanel();
+        m.setOpaque(false);
+        m.setLayout(new GridLayout(2, 0));
+        JLabel score = new JLabel("Score :");
+        score.setFont(new Font("Monospaced",Font.BOLD,20));
+        JLabel scout = new JLabel("Scouts :");
+        scout.setFont(new Font("Monospaced",Font.BOLD,20));
+        m.add(score);m.add(scout);
+        imagePane.add(m,BorderLayout.PAGE_START);
+        imagePane.add(p, BorderLayout.CENTER);
         imagePane.updateUI();
     }
 
