@@ -7,6 +7,10 @@ public class Bloc extends Cube {
 		super.y = y;
 		color = s;
 	}
+
+	public String getColor(){
+		return color;
+	}
 	
 	public String toString() {
 		return "["+color+"]";
