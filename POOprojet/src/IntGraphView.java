@@ -103,37 +103,27 @@ public class IntGraphView extends JFrame {
     public JButton couleurBloc(Bloc b, Niveaux n){
         bt = new JButton();
         if(b.getColor().equals("R")){
-            bt.setBorderPainted(false);
             bt.setContentAreaFilled(false);
-            bt.setFocusPainted(false);
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("red.png"));
         }
         if(((Bloc) b).getColor().equals("G")){
-            bt.setBorderPainted(false);
             bt.setContentAreaFilled(false);
-            bt.setFocusPainted(false);
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("green.png"));
         }
         if(((Bloc) b).getColor().equals("Y")){
-            bt.setBorderPainted(false);
             bt.setContentAreaFilled(false);
-            bt.setFocusPainted(false);
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("yellow.png"));
         }
         if(((Bloc) b).getColor().equals("B")){
-            bt.setBorderPainted(false);
             bt.setContentAreaFilled(false);
-            bt.setFocusPainted(false);
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("blue.png"));
         }
         if(((Bloc) b).getColor().equals("P")){
-            bt.setBorderPainted(false);
             bt.setContentAreaFilled(false);
-            bt.setFocusPainted(false);
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("purple.png"));
         }
