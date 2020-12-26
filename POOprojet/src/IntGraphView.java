@@ -190,6 +190,16 @@ public class IntGraphView extends JFrame {
         scout.setFont(new Font("Monospaced",Font.BOLD,20));
         m.add(score);m.add(scout);
         imagePane.add(m,BorderLayout.PAGE_START);
+        JPanel videGauche = new JPanel();
+        videGauche.setSize(200,200);
+        videGauche.setPreferredSize(new Dimension(200,200));
+        videGauche.setOpaque(false);
+        JPanel videDroite = new JPanel();
+        videDroite.setSize(200,200);
+        videDroite.setPreferredSize(new Dimension(200,200));
+        videDroite.setOpaque(false);
+        imagePane.add(videGauche, BorderLayout.WEST);
+        imagePane.add(videDroite, BorderLayout.EAST);
         imagePane.add(p, BorderLayout.CENTER);
         imagePane.updateUI();
     }
