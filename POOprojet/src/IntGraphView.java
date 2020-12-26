@@ -98,7 +98,6 @@ public class IntGraphView extends JFrame {
         plateau.setOpaque(false);
         GridLayout tab = new GridLayout(n.getPlateau().getCubes().length,n.getPlateau().getCubes()[0].length);
         plateau.setLayout(tab);
-        plateau.setSize(new Dimension(200,100));
         return plateau;
     }
 
