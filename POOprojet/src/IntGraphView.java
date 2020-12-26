@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -27,18 +28,8 @@ public class IntGraphView extends JFrame {
         return niveaux;
     }
 
-    public ImageIcon createImageIcon(String nomFichier) {
-        File f = new File(nomFichier);
-        if (nomFichier != null) {
-            return new ImageIcon(nomFichier);
-        } else {
-            System.err.println("Fichier introuvable : " + f.getAbsolutePath());
-            return null;
-        }
-    }
-
     public void afficheIni(){
-        setTitle("Pet Rescue Saga");
+        setTitle("Scout Rescue Saga");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         jouer = new JButton("Jouer");
@@ -53,7 +44,7 @@ public class IntGraphView extends JFrame {
         quitter.setForeground(Color.WHITE);
         quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
-        titre.setText("Pet Rescue Saga");
+        titre.setText("Scout Rescue Saga");
         titre.setFont(new Font("Monospaced",Font.BOLD,60));
 
         imagePane = new ImagePane();
@@ -89,6 +80,110 @@ public class IntGraphView extends JFrame {
     	imagePane.updateUI();
     }
 
+    public void niveau(){
+        for(int i = 0; i<niveaux.size(); i++){
+            if(niveaux.get(i).isEnabled()){
+                int pos = i;
+                niveaux.get(i).addActionListener((ActionEvent e) -> {
+                    affichePlateau(initialisationPlateau(jg.getNiveaux().get(pos)),jg.getNiveaux().get(pos));
+                });
+            }
+        }
+    }
+
+    public JPanel initialisationPlateau(Niveaux n){
+        JPanel plateau = new JPanel();
+        plateau.setOpaque(false);
+        GridLayout tab = new GridLayout(n.getPlateau().getCubes().length,n.getPlateau().getCubes()[0].length);
+        plateau.setLayout(tab);
+        plateau.setSize(new Dimension(200,100));
+        return plateau;
+    }
+
+    public void affichePlateau(JPanel p, Niveaux n){
+        imagePane.removeAll();
+        for(Cube[] c : n.getPlateau().getCubes()){
+            for(Cube b : c){
+                if(b!=null) {
+                    if (b instanceof Animaux) {
+                        JButton a = new JButton();
+                        a.setBorderPainted(false);
+                        a.setContentAreaFilled(false);
+                        a.setFocusPainted(false);
+                        a.setOpaque(false);
+                        a.setIcon(new ImageIcon("levi.png"));
+                        p.add(a);
+                    }
+                    if (b instanceof Bloc) {
+                        JButton bt = new JButton();
+                        if(((Bloc) b).getColor().equals("R")){
+                            bt.setBorderPainted(false);
+                            bt.setContentAreaFilled(false);
+                            bt.setFocusPainted(false);
+                            bt.setOpaque(false);
+                            bt.setIcon(new ImageIcon("red.png"));
+                            p.add(bt);
+                        }
+                        if(((Bloc) b).getColor().equals("G")){
+                            bt.setBorderPainted(false);
+                            bt.setContentAreaFilled(false);
+                            bt.setFocusPainted(false);
+                            bt.setOpaque(false);
+                            bt.setIcon(new ImageIcon("green.png"));
+                            p.add(bt);
+                        }
+                        if(((Bloc) b).getColor().equals("Y")){
+                            bt.setBorderPainted(false);
+                            bt.setContentAreaFilled(false);
+                            bt.setFocusPainted(false);
+                            bt.setOpaque(false);
+                            bt.setIcon(new ImageIcon("yellow.png"));
+                            p.add(bt);
+                        }
+                        if(((Bloc) b).getColor().equals("B")){
+                            bt.setBorderPainted(false);
+                            bt.setContentAreaFilled(false);
+                            bt.setFocusPainted(false);
+                            bt.setOpaque(false);
+                            bt.setIcon(new ImageIcon("blue.png"));
+                            p.add(bt);
+                        }
+                        if(((Bloc) b).getColor().equals("P")){
+                            bt.setBorderPainted(false);
+                            bt.setContentAreaFilled(false);
+                            bt.setFocusPainted(false);
+                            bt.setOpaque(false);
+                            bt.setIcon(new ImageIcon("purple.png"));
+                            p.add(bt);
+                        }
+                    }
+                    if (b instanceof Obstacle) {
+                        JButton o = new JButton();
+                        o.setBorderPainted(false);
+                        o.setContentAreaFilled(false);
+                        o.setFocusPainted(false);
+                        o.setOpaque(false);
+                        o.setEnabled(false);
+                        o.setIcon(new ImageIcon("obstacle.png"));
+                        p.add(o);
+                    }
+                }else {
+                    JButton vide = new JButton();
+                    vide.setBorderPainted(false);
+                    vide.setContentAreaFilled(false);
+                    vide.setFocusPainted(false);
+                    vide.setOpaque(false);
+                    vide.setEnabled(false);
+                    p.add(vide);
+                }
+            }
+        }
+        JMenuBar m = new JMenuBar();
+        imagePane.add(m);
+        imagePane.add(p);
+        imagePane.updateUI();
+    }
+
     public void niveauxDispo(){
         for(int i = 0; i<jg.getNiveaux().size(); i++){
             if(jg.getNiveaux().get(i).clear()) {
@@ -111,6 +206,7 @@ public class IntGraphView extends JFrame {
             n.setBackground(new Color(93,125,101));
             n.setForeground(Color.WHITE);
         }
+        niveau();
         niveauxDispo();
 
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
