@@ -1,8 +1,8 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 public class IntGraphView extends JFrame {
     private ImagePane imagePane;
@@ -12,12 +12,18 @@ public class IntGraphView extends JFrame {
     private JButton niv2 = new JButton("Niveau 2");
     private JButton niv3 = new JButton("Niveau 3");
     private JButton niv4 = new JButton("Niveau 4");
+    private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
     private IntGraphModel model;
 
     public IntGraphView(IntGraphModel m){
         model = m;
+        niveaux.add(niv1);niveaux.add(niv2);niveaux.add(niv3);niveaux.add(niv4);
         afficheIni();
+    }
+
+    public ArrayList<JButton> getNiveaux(){
+        return niveaux;
     }
 
     public ImageIcon createImageIcon(String nomFichier) {
@@ -84,34 +90,20 @@ public class IntGraphView extends JFrame {
     
     public void affichemenu() {
     	imagePane.removeAll();
-
-        niv1.setFont(new Font("Monospaced",Font.BOLD,20));
-        niv1.setBackground(new Color(93,125,101));
-        niv1.setForeground(Color.WHITE);
-
-        niv2.setFont(new Font("Monospaced",Font.BOLD,20));
-        niv2.setBackground(new Color(93,125,101));
-        niv2.setForeground(Color.WHITE);
-        niv2.setEnabled(false);
-
-        niv3.setFont(new Font("Monospaced",Font.BOLD,20));
-        niv3.setBackground(new Color(93,125,101));
-        niv3.setForeground(Color.WHITE);
-        niv3.setEnabled(false);
-
-        niv4.setFont(new Font("Monospaced",Font.BOLD,20));
-        niv4.setBackground(new Color(93,125,101));
-        niv4.setForeground(Color.WHITE);
-        niv4.setEnabled(false);
+        for(JButton n : niveaux){
+            n.setFont(new Font("Monospaced",Font.BOLD,20));
+            n.setBackground(new Color(93,125,101));
+            n.setForeground(Color.WHITE);
+        }
 
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
         retour.setBackground(new Color(95,105,60));
         retour.setForeground(Color.WHITE);
-
         retour.addActionListener((ActionEvent e) -> {
             afficheIni();
             imagePane.updateUI();
         });
+
         JLabel niv = new JLabel();
         niv.setText("Niveaux");
         niv.setFont(new Font("Monospaced",Font.BOLD,40));
@@ -120,18 +112,12 @@ public class IntGraphView extends JFrame {
         niv.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 100)));
         imagePane.add(niv);
-        niv1.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
-    	imagePane.add(niv1);
-        niv2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
-    	imagePane.add(niv2);
-        niv3.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
-    	imagePane.add(niv3);
-        niv4.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
-    	imagePane.add(niv4);
+        for(JButton n : niveaux){
+            n.setAlignmentX(Component.CENTER_ALIGNMENT);
+            imagePane.add(Box.createRigidArea(new Dimension(0, 15)));
+            imagePane.add(n);
+        }
         retour.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
         imagePane.add(retour);
