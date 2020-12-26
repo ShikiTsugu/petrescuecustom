@@ -15,6 +15,7 @@ public class IntGraphView extends JFrame {
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
     private IntGraphModel model;
+    private final JeuGraphique jg = new JeuGraphique();
 
     public IntGraphView(IntGraphModel m){
         model = m;
@@ -87,6 +88,21 @@ public class IntGraphView extends JFrame {
     	affichemenu();
     	imagePane.updateUI();
     }
+
+    public void niveauxDispo(){
+        for(int i = 0; i<jg.getNiveaux().size(); i++){
+            if(jg.getNiveaux().get(i).clear()) {
+                niveaux.get(i).setEnabled(true);
+            }
+            else {
+                niveaux.get(i).setEnabled(true);
+                for(int j = i+1; j<jg.getNiveaux().size(); j++){
+                    niveaux.get(j).setEnabled(false);
+                }
+                break;
+            }
+        }
+    }
     
     public void affichemenu() {
     	imagePane.removeAll();
@@ -95,6 +111,7 @@ public class IntGraphView extends JFrame {
             n.setBackground(new Color(93,125,101));
             n.setForeground(Color.WHITE);
         }
+        niveauxDispo();
 
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
         retour.setBackground(new Color(95,105,60));
