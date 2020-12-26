@@ -114,11 +114,11 @@ public class IntGraphView extends JFrame {
         });
         JLabel niv = new JLabel();
         niv.setText("Niveaux");
-        niv.setFont(new Font("Monospaced",Font.BOLD,30));
+        niv.setFont(new Font("Monospaced",Font.BOLD,40));
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         niv.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 120)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 100)));
         imagePane.add(niv);
         niv1.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
