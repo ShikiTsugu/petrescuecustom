@@ -17,6 +17,7 @@ public class IntGraphView extends JFrame {
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
     private IntGraphModel model;
+    private int scoreNiv=0,scouts=0;
     private final JeuGraphique jg = new JeuGraphique();
 
     public IntGraphView(IntGraphModel m){
@@ -103,7 +104,10 @@ public class IntGraphView extends JFrame {
 
     public void affichePlateau(JPanel p, Niveaux n){
         imagePane.removeAll();
-        imagePane.setLayout(new BorderLayout());
+        scoreNiv = 0;
+        scouts = n.getPlateau().getNbAnimIni();
+        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
+        imagePane.setLayout(boxlayout);
         for(Cube[] c : n.getPlateau().getCubes()){
             for(Cube b : c){
                 if(b!=null) {
@@ -183,9 +187,9 @@ public class IntGraphView extends JFrame {
         JPanel m = new JPanel();
         m.setOpaque(false);
         m.setLayout(new GridLayout(2, 0));
-        JLabel score = new JLabel("Score :");
+        JLabel score = new JLabel("Score : "+scoreNiv);
         score.setFont(new Font("Monospaced",Font.BOLD,20));
-        JLabel scout = new JLabel("Scouts :");
+        JLabel scout = new JLabel("Scouts : "+n.getPlateau().nbAnimauxSuppr()+"/"+scouts);
         scout.setFont(new Font("Monospaced",Font.BOLD,20));
         m.add(score);m.add(scout);
         imagePane.add(m,BorderLayout.PAGE_START);
