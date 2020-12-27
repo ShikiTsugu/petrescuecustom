@@ -9,10 +9,7 @@ public class IntGraphControl {
         view = v;
         view.getJouer().addActionListener((ActionEvent e) -> jouer());
         view.getQuitter().addActionListener((ActionEvent e) -> System.exit(0));
-        view.getRetour().addActionListener((ActionEvent e) -> {
-            view.afficheIni();
-            view.update();
-        });
+        view.getRetour().addActionListener((ActionEvent e) -> retour());
         for(int i = 0; i<view.getNiveaux().size(); i++) {
             int pos = i;
             view.getNiveaux().get(i).addActionListener((ActionEvent e) -> {
@@ -21,6 +18,11 @@ public class IntGraphControl {
                 }
             });
         }
+    }
+
+    public void retour(){
+        view.afficheIni();
+        view.update();
     }
 
     public void jouer() {
