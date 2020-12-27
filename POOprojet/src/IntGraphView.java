@@ -125,7 +125,7 @@ public class IntGraphView extends JFrame {
         imagePane.removeAll();
         scoreNiv = 0;
         nbScouts = n.getPlateau().getNbAnimIni();
-        imagePane.setLayout(new BorderLayout());
+        imagePane.setLayout(null);
         for(Cube[] c : n.getPlateau().getCubes()){
             for(Cube b : c){
                 if(b!=null) {
@@ -169,25 +169,15 @@ public class IntGraphView extends JFrame {
         JLabel scout = new JLabel("Scouts : "+n.getPlateau().nbAnimauxSuppr()+"/"+nbScouts);
         scout.setFont(new Font("Monospaced",Font.BOLD,20));
         m.add(score);m.add(scout);
-        JPanel videHaut = new JPanel();
-        videHaut.setLayout(new BorderLayout());
-        videHaut.setPreferredSize(new Dimension(0,175));
-        videHaut.setOpaque(false);
-        videHaut.add(m, BorderLayout.LINE_START);
-        JPanel videGauche = new JPanel();
-        videGauche.setPreferredSize(new Dimension(300,0));
-        videGauche.setOpaque(false);
-        JPanel videDroite = new JPanel();
-        videDroite.setPreferredSize(new Dimension(300,0));
-        videDroite.setOpaque(false);
-        if(n.getNum()==2){
-            videGauche.setPreferredSize(new Dimension(350,0));
-            videDroite.setPreferredSize(new Dimension(350,0));
+        imagePane.add(m);
+        imagePane.add(p);
+        m.setBounds(0,0,200,100);
+        switch (n.getNum()){
+            case 1 : p.setBounds(model.getImage().getWidth()/3,model.getImage().getHeight()/3,350,350);break;
+            case 2 : p.setBounds(model.getImage().getWidth()/3+50,model.getImage().getHeight()/5+20,250,400);break;
+            case 3 : p.setBounds(model.getImage().getWidth()/3,model.getImage().getHeight()/6,360,440);break;
+            case 4 : p.setBounds(model.getImage().getWidth()/4+50,model.getImage().getHeight()/5,400,420);break;
         }
-        imagePane.add(videHaut, BorderLayout.PAGE_START);
-        imagePane.add(videGauche, BorderLayout.WEST);
-        imagePane.add(videDroite, BorderLayout.EAST);
-        imagePane.add(p, BorderLayout.CENTER);
         imagePane.updateUI();
     }
 
