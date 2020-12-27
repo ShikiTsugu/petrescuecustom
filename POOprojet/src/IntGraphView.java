@@ -1,12 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class IntGraphView extends JFrame {
     private ImagePane imagePane;
+    private IntGraphModel model;
     private JLabel titre = new JLabel();
-    private JButton jouer,quitter;
+    private JButton jouer = new JButton("Jouer");
+    private JButton quitter = new JButton("Quitter");
     private JButton bt = new JButton();
     private JButton niv1 = new JButton("Niveau 1");
     private JButton niv2 = new JButton("Niveau 2");
@@ -14,7 +15,6 @@ public class IntGraphView extends JFrame {
     private JButton niv4 = new JButton("Niveau 4");
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
-    private IntGraphModel model;
     private int scoreNiv,nbScouts;
     private final JeuGraphique jg = new JeuGraphique();
 
@@ -28,22 +28,30 @@ public class IntGraphView extends JFrame {
         return niveaux;
     }
 
+    public JButton getJouer(){return jouer;}
+
+    public JButton getQuitter(){return quitter;}
+
+    public JButton getRetour(){return retour;}
+
+    public JeuGraphique getJg(){return jg;}
+
+    public void update(){imagePane.updateUI();}
+
+    public void reset(){imagePane.removeAll();}
+
     public void afficheIni(){
         setTitle("Scout Rescue Saga");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        jouer = new JButton("Jouer");
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(93,125,101));
         jouer.setForeground(Color.WHITE);
-        jouer.addActionListener((ActionEvent e) -> jouer());
 
-        quitter = new JButton("Quitter");
         quitter.setFont(new Font("Monospaced",Font.BOLD,20));
         quitter.setBackground(new Color(95,105,60));
         quitter.setForeground(Color.WHITE);
-        quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
         titre.setText("Scout Rescue Saga");
         titre.setFont(new Font("Monospaced",Font.BOLD,60));
@@ -72,23 +80,6 @@ public class IntGraphView extends JFrame {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(model.getImage(),0,0,this);
-        }
-    }
-
-    public void jouer() {
-        imagePane.removeAll();
-        affichemenu();
-        imagePane.updateUI();
-    }
-
-    public void niveau(){
-        for(int i = 0; i<niveaux.size(); i++){
-            if(niveaux.get(i).isEnabled()){
-                int pos = i;
-                niveaux.get(i).addActionListener((ActionEvent e) -> {
-                    affichePlateau(initialisationPlateau(jg.getNiveaux().get(pos)),jg.getNiveaux().get(pos));
-                });
-            }
         }
     }
 
@@ -127,11 +118,6 @@ public class IntGraphView extends JFrame {
             bt.setOpaque(false);
             bt.setIcon(new ImageIcon("purple.png"));
         }
-        bt.addActionListener((ActionEvent e) -> {
-            suppression(n);
-            n.getPlateau().miseAJour();
-            affichePlateau(initialisationPlateau(n),n);
-        });
         return bt;
     }
 
@@ -202,27 +188,6 @@ public class IntGraphView extends JFrame {
         imagePane.updateUI();
     }
 
-    public void suppression(Niveaux n){
-        bt.addActionListener((ActionEvent e) -> {
-            int x = getMousePosition().x;
-            int y = getMousePosition().y;
-            try {
-                if (x != -1 && y != -1 && n.getPlateau().getCubes()[x][y] instanceof Bloc) {
-                    Bloc b = n.getPlateau().getBloc(x, y);
-                    if (n.getPlateau().VerifSeul(x, y, b)) {
-                        n.getPlateau().supprimerAux(x, y, b);
-                    } else {
-                        System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
-                    }
-                } else {
-                    System.out.println("Ceci n'est pas un bloc");
-                }
-            }catch(ArrayIndexOutOfBoundsException ex){
-                System.out.println("Coordonées non valide");
-            }
-        });
-    }
-
     public void niveauxDispo(){
         for(int i = 0; i<jg.getNiveaux().size(); i++){
             if(jg.getNiveaux().get(i).clear()) {
@@ -245,16 +210,11 @@ public class IntGraphView extends JFrame {
             n.setBackground(new Color(93,125,101));
             n.setForeground(Color.WHITE);
         }
-        niveau();
         niveauxDispo();
 
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
         retour.setBackground(new Color(95,105,60));
         retour.setForeground(Color.WHITE);
-        retour.addActionListener((ActionEvent e) -> {
-            afficheIni();
-            imagePane.updateUI();
-        });
 
         JLabel niv = new JLabel();
         niv.setText("Niveaux");

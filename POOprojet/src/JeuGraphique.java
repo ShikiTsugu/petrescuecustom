@@ -36,6 +36,7 @@ public class JeuGraphique {
     public void jouer(){
         IntGraphModel im = new IntGraphModel("background.png");
         IntGraphView iv = new IntGraphView(im);
+        IntGraphControl ic = new IntGraphControl(im,iv);
         iv.pack();
         iv.setVisible(true);
     }
