@@ -53,15 +53,14 @@ public class IntGraphView extends JFrame {
         quitter.setBackground(new Color(95,105,60));
         quitter.setForeground(Color.WHITE);
 
-        titre.setText("Scout Rescue Saga");
-        titre.setFont(new Font("Monospaced",Font.BOLD,60));
+        titre.setIcon(new ImageIcon("logo.png"));
 
         imagePane = new ImagePane();
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         titre.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 120)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 80)));
         imagePane.add(titre);
         jouer.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 120)));
