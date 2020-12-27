@@ -12,6 +12,8 @@ public class Niveaux {
         score = 0;
     }
 
+    public static void resetCompteur(){compteur=1;}
+
     public int getNum(){ return niveau; }
 
     public Plateau getPlateau(){

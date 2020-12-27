@@ -147,7 +147,6 @@ public class IntGraphView extends JFrame {
                         o.setContentAreaFilled(false);
                         o.setFocusPainted(false);
                         o.setOpaque(false);
-                        o.setEnabled(false);
                         o.setIcon(new ImageIcon("obstacle.png"));
                         p.add(o);
                     }
@@ -181,6 +180,10 @@ public class IntGraphView extends JFrame {
         JPanel videDroite = new JPanel();
         videDroite.setPreferredSize(new Dimension(300,0));
         videDroite.setOpaque(false);
+        if(n.getNum()==2){
+            videGauche.setPreferredSize(new Dimension(350,0));
+            videDroite.setPreferredSize(new Dimension(350,0));
+        }
         imagePane.add(videHaut, BorderLayout.PAGE_START);
         imagePane.add(videGauche, BorderLayout.WEST);
         imagePane.add(videDroite, BorderLayout.EAST);

@@ -25,6 +25,7 @@ public class JeuGraphique {
         Plateau p1 = new Plateau(c1);Plateau p2 = new Plateau(c2);Plateau p3 = new Plateau(c3);Plateau p4 = new Plateau(c4);
 
         //Création des niveaux et ajout des niveaux
+        Niveaux.resetCompteur();
         Niveaux n1 = new Niveaux(p1);Niveaux n2 = new Niveaux(p2);Niveaux n3 = new Niveaux(p3);Niveaux n4 = new Niveaux(p4);
         niveaux.add(n1);niveaux.add(n2);niveaux.add(n3);niveaux.add(n4);
     }
