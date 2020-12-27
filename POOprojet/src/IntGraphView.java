@@ -21,6 +21,7 @@ public class IntGraphView extends JFrame {
     public IntGraphView(IntGraphModel m){
         model = m;
         niveaux.add(niv1);niveaux.add(niv2);niveaux.add(niv3);niveaux.add(niv4);
+        setResizable(false);
         afficheIni();
     }
 
@@ -43,7 +44,6 @@ public class IntGraphView extends JFrame {
     public void afficheIni(){
         setTitle("Scout Rescue Saga");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
 
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(93,125,101));
