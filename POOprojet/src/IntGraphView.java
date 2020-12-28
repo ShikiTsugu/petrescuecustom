@@ -15,7 +15,7 @@ public class IntGraphView extends JFrame {
     private JButton niv4 = new JButton("Niveau 4");
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
-    private int scoreNiv,nbScouts;
+    private int scoreNiv,meilleurScoreNiv,nbScouts;
     private final JeuGraphique jg = new JeuGraphique();
 
     public IntGraphView(IntGraphModel m){
@@ -123,6 +123,7 @@ public class IntGraphView extends JFrame {
     public void affichePlateau(JPanel p, Niveaux n){
         imagePane.removeAll();
         scoreNiv = 0;
+        meilleurScoreNiv = n.getScore();
         nbScouts = n.getPlateau().getNbAnimIni();
         imagePane.setLayout(null);
         for(Cube[] c : n.getPlateau().getCubes()){
@@ -163,14 +164,16 @@ public class IntGraphView extends JFrame {
         JPanel m = new JPanel();
         m.setOpaque(false);
         m.setLayout(new BoxLayout(m,BoxLayout.Y_AXIS));
+        JLabel bestscore = new JLabel("Meilleur score : "+meilleurScoreNiv);
+        bestscore.setFont(new Font("Monospaced",Font.BOLD,20));
         JLabel score = new JLabel("Score : "+scoreNiv);
         score.setFont(new Font("Monospaced",Font.BOLD,20));
         JLabel scout = new JLabel("Scouts : "+n.getPlateau().nbAnimauxSuppr()+"/"+nbScouts);
         scout.setFont(new Font("Monospaced",Font.BOLD,20));
-        m.add(score);m.add(scout);
+        m.add(bestscore);m.add(score);m.add(scout);
         imagePane.add(m);
         imagePane.add(p);
-        m.setBounds(0,0,200,100);
+        m.setBounds(0,0,400,100);
         switch (n.getNum()){
             case 1 : p.setBounds(model.getImage().getWidth()/3,model.getImage().getHeight()/3,350,350);break;
             case 2 : p.setBounds(model.getImage().getWidth()/3+50,model.getImage().getHeight()/5+20,250,400);break;
