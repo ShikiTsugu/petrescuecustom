@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class IntGraphView extends JFrame {
@@ -8,7 +9,6 @@ public class IntGraphView extends JFrame {
     private JLabel titre = new JLabel();
     private JButton jouer = new JButton("Jouer");
     private JButton quitter = new JButton("Quitter");
-    private JButton bt = new JButton();
     private JButton niv1 = new JButton("Niveau 1");
     private JButton niv2 = new JButton("Niveau 2");
     private JButton niv3 = new JButton("Niveau 3");
@@ -36,8 +36,6 @@ public class IntGraphView extends JFrame {
     public JButton getRetour(){return retour;}
 
     public JeuGraphique getJg(){return jg;}
-
-    public JButton getBt(){return bt;}
 
     public void update(){imagePane.updateUI();}
 
@@ -92,34 +90,52 @@ public class IntGraphView extends JFrame {
         return plateau;
     }
 
+    public void afficheCoord(JButton b){
+        System.out.println(b.getX()+", "+b.getY());
+    }
+
     public JButton couleurBloc(Bloc b, Niveaux n){
-        bt = new JButton();
         if(b.getColor().equals("R")){
-            bt.setContentAreaFilled(false);
-            bt.setOpaque(false);
-            bt.setIcon(new ImageIcon("red.png"));
+            JButton r = new JButton();
+            r.addActionListener((ActionEvent e) -> afficheCoord(r));
+            r.setContentAreaFilled(false);
+            r.setOpaque(false);
+            r.setIcon(new ImageIcon("red.png"));
+            return r;
         }
         if(((Bloc) b).getColor().equals("G")){
-            bt.setContentAreaFilled(false);
-            bt.setOpaque(false);
-            bt.setIcon(new ImageIcon("green.png"));
+            JButton g = new JButton();
+            g.addActionListener((ActionEvent e) -> afficheCoord(g));
+            g.setContentAreaFilled(false);
+            g.setOpaque(false);
+            g.setIcon(new ImageIcon("green.png"));
+            return g;
         }
         if(((Bloc) b).getColor().equals("Y")){
-            bt.setContentAreaFilled(false);
-            bt.setOpaque(false);
-            bt.setIcon(new ImageIcon("yellow.png"));
+            JButton y = new JButton();
+            y.addActionListener((ActionEvent e) -> afficheCoord(y));
+            y.setContentAreaFilled(false);
+            y.setOpaque(false);
+            y.setIcon(new ImageIcon("yellow.png"));
+            return y;
         }
         if(((Bloc) b).getColor().equals("B")){
-            bt.setContentAreaFilled(false);
-            bt.setOpaque(false);
-            bt.setIcon(new ImageIcon("blue.png"));
+            JButton bl = new JButton();
+            bl.addActionListener((ActionEvent e) -> afficheCoord(bl));
+            bl.setContentAreaFilled(false);
+            bl.setOpaque(false);
+            bl.setIcon(new ImageIcon("blue.png"));
+            return bl;
         }
         if(((Bloc) b).getColor().equals("P")){
-            bt.setContentAreaFilled(false);
-            bt.setOpaque(false);
-            bt.setIcon(new ImageIcon("purple.png"));
+            JButton p = new JButton();
+            p.addActionListener((ActionEvent e) -> afficheCoord(p));
+            p.setContentAreaFilled(false);
+            p.setOpaque(false);
+            p.setIcon(new ImageIcon("purple.png"));
+            return p;
         }
-        return bt;
+        return null;
     }
 
     public void affichePlateau(JPanel p, Niveaux n){
