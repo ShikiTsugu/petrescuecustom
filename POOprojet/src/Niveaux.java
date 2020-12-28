@@ -20,6 +20,8 @@ public class Niveaux {
         return plateau;
     }
 
+    public int getScore(){return score;}
+
     public void setAsCleared(){
         clear = true;
     }
