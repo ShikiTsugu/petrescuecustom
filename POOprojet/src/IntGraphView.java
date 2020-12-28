@@ -37,6 +37,8 @@ public class IntGraphView extends JFrame {
 
     public JeuGraphique getJg(){return jg;}
 
+    public JButton getBt(){return bt;}
+
     public void update(){imagePane.updateUI();}
 
     public void reset(){imagePane.removeAll();}
