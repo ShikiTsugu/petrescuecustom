@@ -156,9 +156,6 @@ public class IntGraphView extends JFrame {
             update();
         }else {
             reset();
-            Score s = new Score();
-            s.calcul(n.getPlateau().nbBlocSuppr());
-            scoreNiv += s.getScore();
             meilleurScoreNiv = n.getScore();
             nbScouts = n.getPlateau().getNbAnimIni();
             imagePane.setLayout(null);
@@ -177,8 +174,12 @@ public class IntGraphView extends JFrame {
                         if (b instanceof Bloc) {
                             JButton bt = couleurBloc((Bloc) b, n);
                             bt.addActionListener((ActionEvent e) -> {
+                                Score s = new Score();
                                 supprimer(bt, n);
                                 n.getPlateau().miseAJour();
+                                s.calcul(n.getPlateau().nbBlocSuppr());
+                                s.animauxPoint(n.getPlateau().nbAnimauxSuppr());
+                                scoreNiv += s.getScore();
                                 JPanel pnew = initialisationPlateau(n);
                                 affichePlateau(pnew, n);
                             });
@@ -254,11 +255,6 @@ public class IntGraphView extends JFrame {
 
     public void affichemenu() {
         reset();
-        for(JButton n : niveaux){
-            n.setFont(new Font("Monospaced",Font.BOLD,20));
-            n.setBackground(new Color(93,125,101));
-            n.setForeground(Color.WHITE);
-        }
         niveauxDispo();
 
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -271,13 +267,25 @@ public class IntGraphView extends JFrame {
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         niv.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 100)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
         imagePane.add(niv);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
+        int i = 0;
         for(JButton n : niveaux){
+            jg.getNiveaux().get(i).meilleurScore(scoreNiv);
+            int score = jg.getNiveaux().get(i).getScore();
+            JLabel meilleurScore = new JLabel("Meilleur score : "+score);
+            meilleurScore.setFont(new Font("Monospaced",Font.BOLD,20));
+            meilleurScore.setAlignmentX(Component.CENTER_ALIGNMENT);
+            imagePane.add(Box.createRigidArea(new Dimension(0, 5)));
+            if(jg.getNiveaux().get(i).clear())imagePane.add(meilleurScore);
+            n.setFont(new Font("Monospaced",Font.BOLD,20));
+            n.setBackground(new Color(93,125,101));
+            n.setForeground(Color.WHITE);
             n.setAlignmentX(Component.CENTER_ALIGNMENT);
             imagePane.add(Box.createRigidArea(new Dimension(0, 15)));
             imagePane.add(n);
+            i++;
         }
         retour.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
