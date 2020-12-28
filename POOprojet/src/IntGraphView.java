@@ -90,14 +90,29 @@ public class IntGraphView extends JFrame {
         return plateau;
     }
 
-    public void afficheCoord(JButton b){
-        System.out.println(b.getX()+", "+b.getY());
+    public void supprimer(JButton bt, Niveaux n){
+        int y = bt.getX()/50;
+        int x = bt.getY()/50;
+        System.out.println(n.getPlateau().getCubes()[x][y]);
+        try {
+            if (x != -1 && y != -1 && n.getPlateau().getCubes()[x][y] instanceof Bloc) {
+                Bloc b = n.getPlateau().getBloc(x, y);
+                if (n.getPlateau().VerifSeul(x, y, b)) {
+                    n.getPlateau().supprimerAux(x, y, b);
+                } else {
+                    System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
+                }
+            } else {
+                System.out.println("Ceci n'est pas un bloc");
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Coordonées non valide");
+        }
     }
 
     public JButton couleurBloc(Bloc b, Niveaux n){
         if(b.getColor().equals("R")){
             JButton r = new JButton();
-            r.addActionListener((ActionEvent e) -> afficheCoord(r));
             r.setContentAreaFilled(false);
             r.setOpaque(false);
             r.setIcon(new ImageIcon("red.png"));
@@ -105,7 +120,6 @@ public class IntGraphView extends JFrame {
         }
         if(((Bloc) b).getColor().equals("G")){
             JButton g = new JButton();
-            g.addActionListener((ActionEvent e) -> afficheCoord(g));
             g.setContentAreaFilled(false);
             g.setOpaque(false);
             g.setIcon(new ImageIcon("green.png"));
@@ -113,7 +127,6 @@ public class IntGraphView extends JFrame {
         }
         if(((Bloc) b).getColor().equals("Y")){
             JButton y = new JButton();
-            y.addActionListener((ActionEvent e) -> afficheCoord(y));
             y.setContentAreaFilled(false);
             y.setOpaque(false);
             y.setIcon(new ImageIcon("yellow.png"));
@@ -121,7 +134,6 @@ public class IntGraphView extends JFrame {
         }
         if(((Bloc) b).getColor().equals("B")){
             JButton bl = new JButton();
-            bl.addActionListener((ActionEvent e) -> afficheCoord(bl));
             bl.setContentAreaFilled(false);
             bl.setOpaque(false);
             bl.setIcon(new ImageIcon("blue.png"));
@@ -129,7 +141,6 @@ public class IntGraphView extends JFrame {
         }
         if(((Bloc) b).getColor().equals("P")){
             JButton p = new JButton();
-            p.addActionListener((ActionEvent e) -> afficheCoord(p));
             p.setContentAreaFilled(false);
             p.setOpaque(false);
             p.setIcon(new ImageIcon("purple.png"));
@@ -157,7 +168,14 @@ public class IntGraphView extends JFrame {
                         p.add(a);
                     }
                     if (b instanceof Bloc) {
-                        p.add(couleurBloc((Bloc) b,n));
+                        JButton bt = couleurBloc((Bloc) b,n);
+                        bt.addActionListener((ActionEvent e) -> {
+                            supprimer(bt,n);
+                            n.getPlateau().miseAJour();
+                            JPanel pnew = initialisationPlateau(n);
+                            affichePlateau(pnew,n);
+                        });
+                        p.add(bt);
                     }
                     if (b instanceof Obstacle) {
                         JButton o = new JButton();
