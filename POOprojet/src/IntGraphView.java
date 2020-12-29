@@ -15,8 +15,10 @@ public class IntGraphView extends JFrame {
     private JButton niv4 = new JButton("Niveau 4");
     private ArrayList<JButton> niveaux = new ArrayList<>();
     private JButton retour = new JButton("Retour");
+    private JButton retourMenu = new JButton("Retour");
     private int scoreNiv,meilleurScoreNiv,nbScouts;
     private final JeuGraphique jg = new JeuGraphique();
+    private boolean done=false;
 
     public IntGraphView(IntGraphModel m){
         model = m;
@@ -34,6 +36,8 @@ public class IntGraphView extends JFrame {
     public JButton getQuitter(){return quitter;}
 
     public JButton getRetour(){return retour;}
+
+    public JButton getRetourMenu(){return retourMenu;}
 
     public JeuGraphique getJg(){return jg;}
 
@@ -149,13 +153,34 @@ public class IntGraphView extends JFrame {
         return null;
     }
 
+    public void afficheScore(){
+        JLabel bestscore = new JLabel("Meilleur score : " + meilleurScoreNiv);
+        bestscore.setFont(new Font("Monospaced", Font.BOLD, 40));
+        JLabel score = new JLabel("Score : " + scoreNiv);
+        score.setFont(new Font("Monospaced", Font.BOLD, 40));
+        retourMenu.setFont(new Font("Monospaced",Font.BOLD,20));
+        retourMenu.setBackground(new Color(95,105,60));
+        retourMenu.setForeground(Color.WHITE);
+        bestscore.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.setLayout(new BoxLayout(imagePane, BoxLayout.Y_AXIS));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 120)));
+        imagePane.add(bestscore);
+        score.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 15)));
+        imagePane.add(score);
+        retourMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 240)));
+        imagePane.add(retourMenu);
+    }
+
     public void affichePlateau(JPanel p, Niveaux n){
         if(n.clear()){
             reset();
-            affichemenu();
+            afficheScore();
             update();
         }else {
             reset();
+            n.meilleurScore(scoreNiv);
             meilleurScoreNiv = n.getScore();
             nbScouts = n.getPlateau().getNbAnimIni();
             imagePane.setLayout(null);
