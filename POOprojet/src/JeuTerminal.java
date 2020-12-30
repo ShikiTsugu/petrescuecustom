@@ -12,10 +12,12 @@ public class JeuTerminal {
     private Cube a = new Animaux(0,0);
     private Cube o = new Obstacle(0,0);
     private final Joueur joueur;
+    private final Robot robot;
     private boolean valide;
 
     public JeuTerminal(){
         joueur = new Joueur();
+        robot = new Robot();
 
         //Création des tableaux pour les plateaux
         Cube[][] c1 = {{null,a,null,null,null,a,null},{p,p,r,r,r,y,y},{p,p,b,b,b,y,y},{r,r,b,b,b,g,g},{r,r,b,b,b,g,g}
@@ -104,6 +106,13 @@ public class JeuTerminal {
         }
     }
 
+    public String choixJoueur(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Voulez vous jouer ou voulez vous laisser le robot jouer ? (J) pour vous, (R) pour le robot.");
+        String s = sc.nextLine();
+        return s;
+    }
+
     public void jouer(){
         try{
             if(toutDebloque()) {
@@ -118,8 +127,10 @@ public class JeuTerminal {
                 System.out.println("Score : " + score);
                 System.out.println("Animaux : 0/"+animIni);
                 niv.getPlateau().affiche();
+                String choix = choixJoueur();
                 while (!niv.clear()) {
-                    niv.getPlateau().supprimer();
+                    if(choix.equals("J")) niv.getPlateau().supprimer();
+                    else niv.getPlateau().supprimerRob();
                     s.calcul(niv.getPlateau().nbBlocSuppr());
                     s.animauxPoint(niv.getPlateau().nbAnimauxSuppr());
                     score = s.getScore();

@@ -2,12 +2,14 @@ public class Plateau {
 	
     private Cube[][] cubes;
     private Joueur joueur;
+    private Robot robot;
     private int blocIni;
     private int nbAnimIni;
 
     public Plateau(Cube[][] c){
         cubes = c;
         joueur = new Joueur();
+        robot = new Robot();
         blocIni = nbBlocInitial();
         nbAnimIni = nbAnimaux();
     }
@@ -188,6 +190,26 @@ public class Plateau {
     	int x = coord[0];
     	int y = coord[1];
     	try {
+            if (x != -1 && y != -1 && cubes[x][y] instanceof Bloc) {
+                Bloc b = getBloc(x, y);
+                if (VerifSeul(x, y, b)) {
+                    supprimerAux(x, y, b);
+                } else {
+                    System.out.println("Ce bloc est seul, il ne peut pas être supprimer");
+                }
+            } else {
+                System.out.println("Ceci n'est pas un bloc");
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Coordonées non valide");
+        }
+    }
+
+    public void supprimerRob(){
+        int[] coord = robot.Coord(cubes);
+        int x = coord[0];
+        int y = coord[1];
+        try {
             if (x != -1 && y != -1 && cubes[x][y] instanceof Bloc) {
                 Bloc b = getBloc(x, y);
                 if (VerifSeul(x, y, b)) {
