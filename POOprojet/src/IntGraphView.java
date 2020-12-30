@@ -8,6 +8,7 @@ public class IntGraphView extends JFrame {
     private IntGraphModel model;
     private JLabel titre = new JLabel();
     private JButton jouer = new JButton("Jouer");
+    private JButton newPartie = new JButton("Nouvelle Partie");
     private JButton quitter = new JButton("Quitter");
     private JButton niv1 = new JButton("Niveau 1");
     private JButton niv2 = new JButton("Niveau 2");
@@ -33,6 +34,8 @@ public class IntGraphView extends JFrame {
 
     public JButton getJouer(){return jouer;}
 
+    public JButton getNewPartie(){return newPartie;}
+
     public JButton getQuitter(){return quitter;}
 
     public JButton getRetour(){return retour;}
@@ -48,6 +51,10 @@ public class IntGraphView extends JFrame {
     public void afficheIni(){
         setTitle("Scout Rescue Saga");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        newPartie.setFont(new Font("Monospaced",Font.BOLD,20));
+        newPartie.setBackground(new Color(93,125,101));
+        newPartie.setForeground(Color.WHITE);
 
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(93,125,101));
@@ -67,10 +74,13 @@ public class IntGraphView extends JFrame {
         imagePane.add(Box.createRigidArea(new Dimension(0, 80)));
         imagePane.add(titre);
         jouer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 120)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 60)));
         imagePane.add(jouer);
+        newPartie.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 10)));
+        imagePane.add(newPartie);
         quitter.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 40)));
         imagePane.add(quitter);
 
         setContentPane(imagePane);
