@@ -9,7 +9,6 @@ public class JeuGraphique {
     private Cube p = new Bloc(0,0,"P");
     private Cube a = new Animaux(0,0);
     private Cube o = new Obstacle(0,0);
-    private boolean valide;
 
     public JeuGraphique(){
         //Création des tableaux pour les plateaux
