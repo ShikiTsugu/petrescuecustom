@@ -153,8 +153,8 @@ public class IntGraphView extends JFrame {
         return null;
     }
 
-    public void afficheScore(){
-        JLabel bestscore = new JLabel("Meilleur score : " + meilleurScoreNiv);
+    public void afficheScore(Niveaux n){
+        JLabel bestscore = new JLabel("Meilleur score : " + n.getScore());
         bestscore.setFont(new Font("Monospaced", Font.BOLD, 40));
         JLabel score = new JLabel("Score : " + scoreNiv);
         score.setFont(new Font("Monospaced", Font.BOLD, 40));
@@ -176,13 +176,12 @@ public class IntGraphView extends JFrame {
     public void affichePlateau(JPanel p, Niveaux n){
         if(n.clear()){
             reset();
-            afficheScore();
+            afficheScore(n);
             scoreNiv = 0;
+            meilleurScoreNiv = 0;
             update();
         }else {
             reset();
-            n.meilleurScore(scoreNiv);
-            meilleurScoreNiv = n.getScore();
             nbScouts = n.getPlateau().getNbAnimIni();
             imagePane.setLayout(null);
             for (Cube[] c : n.getPlateau().getCubes()) {
@@ -206,6 +205,8 @@ public class IntGraphView extends JFrame {
                                 s.calcul(n.getPlateau().nbBlocSuppr());
                                 s.animauxPoint(n.getPlateau().nbAnimauxSuppr());
                                 scoreNiv += s.getScore();
+                                n.meilleurScore(scoreNiv);
+                                meilleurScoreNiv = n.getScore();
                                 JPanel pnew = initialisationPlateau(n);
                                 affichePlateau(pnew, n);
                             });
