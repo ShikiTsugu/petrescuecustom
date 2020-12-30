@@ -114,7 +114,7 @@ public class IntGraphView extends JFrame {
         }
     }
 
-    public JButton couleurBloc(Bloc b, Niveaux n){
+    public JButton couleurBloc(Bloc b){
         if(b.getColor().equals("R")){
             JButton r = new JButton();
             r.setContentAreaFilled(false);
@@ -122,28 +122,28 @@ public class IntGraphView extends JFrame {
             r.setIcon(new ImageIcon("red.png"));
             return r;
         }
-        if(((Bloc) b).getColor().equals("G")){
+        if(b.getColor().equals("G")){
             JButton g = new JButton();
             g.setContentAreaFilled(false);
             g.setOpaque(false);
             g.setIcon(new ImageIcon("green.png"));
             return g;
         }
-        if(((Bloc) b).getColor().equals("Y")){
+        if(b.getColor().equals("Y")){
             JButton y = new JButton();
             y.setContentAreaFilled(false);
             y.setOpaque(false);
             y.setIcon(new ImageIcon("yellow.png"));
             return y;
         }
-        if(((Bloc) b).getColor().equals("B")){
+        if(b.getColor().equals("B")){
             JButton bl = new JButton();
             bl.setContentAreaFilled(false);
             bl.setOpaque(false);
             bl.setIcon(new ImageIcon("blue.png"));
             return bl;
         }
-        if(((Bloc) b).getColor().equals("P")){
+        if(b.getColor().equals("P")){
             JButton p = new JButton();
             p.setContentAreaFilled(false);
             p.setOpaque(false);
@@ -198,7 +198,7 @@ public class IntGraphView extends JFrame {
                             p.add(a);
                         }
                         if (b instanceof Bloc) {
-                            JButton bt = couleurBloc((Bloc) b, n);
+                            JButton bt = couleurBloc((Bloc) b);
                             bt.addActionListener((ActionEvent e) -> {
                                 Score s = new Score();
                                 supprimer(bt, n);
