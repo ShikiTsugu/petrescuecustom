@@ -21,9 +21,19 @@ public class Niveaux {
     }
 
     public int getScore(){return score;}
-
+    
+    public boolean getClear() {return clear;};
+    
     public void setAsCleared(){
         clear = true;
+    }
+    
+    public void setAsUncleared() {
+    	clear = false;
+    }
+    
+    public void setScore(int s) {
+    	score = s;
     }
 
     //test si le niveau est terminé, si oui alors le boolean clear devient true
@@ -43,6 +53,6 @@ public class Niveaux {
 
     public String toString(){
         System.out.print("Niveau "+niveau+" : ");
-        return clear?"Terminé, meilleur score : "+score:"Non terminé.";
+        return clear?"Terminé, meilleur score : "+score : "Non terminé.";
     }
 }

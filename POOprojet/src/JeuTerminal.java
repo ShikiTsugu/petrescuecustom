@@ -1,9 +1,19 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class JeuTerminal {
-    private ArrayList<Niveaux> niveaux = new ArrayList<>();
+public class JeuTerminal implements Serializable{
+	private ArrayList<Niveaux> niveaux = new ArrayList<>();
+	private Save save = new Save();
     private Cube r = new Bloc(0,0,"R");
     private Cube g = new Bloc(0,0,"G");
     private Cube y = new Bloc(0,0,"Y");
@@ -11,8 +21,8 @@ public class JeuTerminal {
     private Cube p = new Bloc(0,0,"P");
     private Cube a = new Animaux(0,0);
     private Cube o = new Obstacle(0,0);
-    private final Joueur joueur;
     private final Robot robot;
+    private final Joueur joueur;
     private boolean valide;
 
     public JeuTerminal(){
@@ -34,13 +44,16 @@ public class JeuTerminal {
         //Création des niveaux et ajout des niveaux
         Niveaux n1 = new Niveaux(p1);Niveaux n2 = new Niveaux(p2);Niveaux n3 = new Niveaux(p3);Niveaux n4 = new Niveaux(p4);
         niveaux.add(n1);niveaux.add(n2);niveaux.add(n3);niveaux.add(n4);
+        addNivtoSave();
+        Load();
+    	loadSave();
     }
 
     //montre la liste des niveaux débloqués, on affiche toujours le tout premier niveau
     public void montrerNiv(){
         System.out.println("Niveaux :");
         for(int i = 0; i<niveaux.size(); i++){
-            if(niveaux.get(i).clear()) {
+            if(niveaux.get(i).getClear()) {
                 System.out.println(niveaux.get(i));
             }
             else {
@@ -54,32 +67,40 @@ public class JeuTerminal {
     public Niveaux selectNiv(){
         Scanner sc = new Scanner(System.in);
         montrerNiv();
-        System.out.println("\nChoisissez un niveau en entrant le numéro :");
+        System.out.println("\nChoisissez un niveau en entrant le numéro (Tapez reset pour écraser votre sauvegarde):");
         //test si le scanner est correct
         try {
-            int n = sc.nextInt();
-            //si oui on parcourt les niveaux et si ça correspond on renvoit ce niveau, on affiche seulement les niveaux débloqués
-            for(Niveaux niv : niveaux){
-                if(n==niv.getNum()) {
-                    //si c'est le premier niveau alors on le retourne
-                    if (niveaux.indexOf(niv) == 0) {
-                        valide = true;
-                        return niv;
-                    }
-                    //sinon on test si le niveau précédent a été complété, si oui alors on accepte la requête de faire le niveau suivant
-                    else {
-                        if (niveaux.get(niveaux.indexOf(niv) - 1).clear()) {
+        	String s = sc.next();
+        	if (isNumeric(s)) {
+        		int n = Integer.parseInt(s);
+                //si oui on parcourt les niveaux et si ça correspond on renvoit ce niveau, on affiche seulement les niveaux débloqués
+                for(Niveaux niv : niveaux){
+                    if(n==niv.getNum()) {
+                        //si c'est le premier niveau alors on le retourne
+                        if (niveaux.indexOf(niv) == 0) {
                             valide = true;
                             return niv;
-                            // si on essaye de faire un niveau alors que le niveau précédent n'est pas terminé on retourne null
-                        } else if (!niveaux.get(niveaux.indexOf(niv) - 1).clear()) {
-                            valide = false;
-                            System.out.println("Niveau précédent non terminé.");
-                            return null;
+                        }
+                        //sinon on test si le niveau précédent a été complété, si oui alors on accepte la requête de faire le niveau suivant
+                        else {
+                            if (niveaux.get(niveaux.indexOf(niv) - 1).getClear()) {
+                                valide = true;
+                                return niv;
+                                // si on essaye de faire un niveau alors que le niveau précédent n'est pas terminé on retourne null
+                            } else if (!niveaux.get(niveaux.indexOf(niv) - 1).getClear()) {
+                                valide = false;
+                                System.out.println("Niveau précédent non terminé.");
+                                return null;
+                            }
                         }
                     }
                 }
-            }
+        	} else {
+        		if (s.equals("Reset")) {
+        			resetSave();
+        			selectNiv();
+        		}
+        	}
             //si le scanner est incorrect au retourne null
         }catch(InputMismatchException e){
             valide=false;
@@ -91,11 +112,21 @@ public class JeuTerminal {
         System.out.println("Niveau inexistant.");
         return null;
     }
+    
+    public boolean isNumeric(String input) {
+    	  try {
+    	    Integer.parseInt(input);
+    	    return true;
+    	  }
+    	  catch (NumberFormatException e) {
+    	    return false;
+    	  }
+    }
 
     //vérifie si tous les niveaux ont été débloqués
     public boolean toutDebloque(){
         for(Niveaux niv : niveaux){
-            if(!niv.clear()) return false;
+            if(!niv.getClear()) return false;
         }
         return true;
     }
@@ -105,7 +136,7 @@ public class JeuTerminal {
             niv.setAsCleared();
         }
     }
-
+    
     public String choixJoueur(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Voulez vous jouer ou voulez vous laisser le robot jouer ? (J) pour vous, (R) pour le robot.");
@@ -129,8 +160,9 @@ public class JeuTerminal {
                 niv.getPlateau().affiche();
                 String choix = choixJoueur();
                 while (!niv.clear()) {
-                    if(choix.equals("J")) niv.getPlateau().supprimer();
+                	if(choix.equals("J")) niv.getPlateau().supprimer();
                     else niv.getPlateau().supprimerRob();
+                    niv.getPlateau().supprimer();
                     s.calcul(niv.getPlateau().nbBlocSuppr());
                     s.animauxPoint(niv.getPlateau().nbAnimauxSuppr());
                     score = s.getScore();
@@ -147,6 +179,8 @@ public class JeuTerminal {
                 if(rep.equals("o")) jouer();
                 else {
                     System.out.println("Progression sauvegardé.");
+                    saveNiv();
+                    Save();
                 }
             }else{
                 jouer();
@@ -154,5 +188,85 @@ public class JeuTerminal {
         }catch(NullPointerException e){
             jouer();
         }
+    }
+    
+    public void Save() {
+    	try {
+        	FileOutputStream fos = new FileOutputStream("src/Save.ser");
+        	
+        	ObjectOutputStream oos = new ObjectOutputStream(fos);
+        	
+        	oos.writeObject(save);
+        	
+        	oos.close();
+        } catch(IOException e) {
+        	e.printStackTrace();
+        }
+    }
+    
+    public void Load() {
+    	try {
+    		File file = new File("src/Save.ser");
+    		 
+    		if (file.length() == 0) {
+    			throw new IOException("Il n'y a pas de sauvegarde");
+    		}
+        	FileInputStream fis = new FileInputStream("src/Save.ser");
+        	
+        	ObjectInputStream ois = new ObjectInputStream(fis);
+        	
+        	save = (((Save)ois.readObject()));
+        	
+        	ois.close();
+        } catch (FileNotFoundException e) {
+			System.out.println(e);
+		} catch(IOException e) {
+			System.out.println(e);
+        } catch (ClassNotFoundException e) {
+        	System.out.println(e);
+		}
+    }
+    
+    public void saveNiv() {
+    	for (Niveaux niv : niveaux) {
+    		save.setNiveauClear(niv.getClear(),niv.getNum()-1);
+    		save.setNiveauScore(niv.getScore(),niv.getNum()-1);
+    	}
+    }
+    
+    public void addNivtoSave() {
+    	for (Niveaux niv : niveaux) {
+    		save.addNiveauClear(niv.getClear());
+    		save.addNiveauScore(niv.getScore());
+    	}
+    }
+    
+    public void loadSave() {
+    	int i = 0;
+    	for (boolean nivclear : save.getNiveauxClear()) {
+    		if (nivclear) {
+    			niveaux.get(i).setAsCleared();
+    		}
+    		i++;
+    	}
+    	i = 0;
+    	for (int nivscore : save.getNiveauxScore()) {
+    		niveaux.get(i).meilleurScore(nivscore);
+    		i++;
+    	}
+    }
+    
+    public void resetSave() {
+    	try {
+    		PrintWriter writer = new PrintWriter("src/Save.ser");
+        	writer.print("");
+        	writer.close();
+        	for (Niveaux niv : niveaux) {
+        		niv.setAsUncleared();
+        		niv.setScore(0);
+        	}
+    	} catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	}
     }
 }
