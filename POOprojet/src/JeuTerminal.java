@@ -222,7 +222,7 @@ public class JeuTerminal implements Serializable{
     			System.out.println("Il n'y a pas de sauvegarde");
     		}
         } catch (ClassNotFoundException e) {
-        	System.out.println("test3");
+        	System.out.println(e);
 		}
     }
     
