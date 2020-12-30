@@ -67,9 +67,10 @@ public class JeuTerminal implements Serializable{
     public Niveaux selectNiv(){
         Scanner sc = new Scanner(System.in);
         montrerNiv();
-        System.out.println("\nChoisissez un niveau en entrant le numéro (Tapez reset pour écraser votre sauvegarde):");
+        System.out.println("\nChoisissez un niveau en entrant le numéro (Tapez 'Reset' pour écraser votre sauvegarde):");
         //test si le scanner est correct
         try {
+        	
         	String s = sc.next();
         	if (isNumeric(s)) {
         		int n = Integer.parseInt(s);
@@ -98,7 +99,7 @@ public class JeuTerminal implements Serializable{
         	} else {
         		if (s.equals("Reset")) {
         			resetSave();
-        			selectNiv();
+        			return null;
         		}
         	}
             //si le scanner est incorrect au retourne null
@@ -162,7 +163,6 @@ public class JeuTerminal implements Serializable{
                 while (!niv.clear()) {
                 	if(choix.equals("J")) niv.getPlateau().supprimer();
                     else niv.getPlateau().supprimerRob();
-                    niv.getPlateau().supprimer();
                     s.calcul(niv.getPlateau().nbBlocSuppr());
                     s.animauxPoint(niv.getPlateau().nbAnimauxSuppr());
                     score = s.getScore();
@@ -206,11 +206,6 @@ public class JeuTerminal implements Serializable{
     
     public void Load() {
     	try {
-    		File file = new File("src/Save.ser");
-    		 
-    		if (file.length() == 0) {
-    			throw new IOException("Il n'y a pas de sauvegarde");
-    		}
         	FileInputStream fis = new FileInputStream("src/Save.ser");
         	
         	ObjectInputStream ois = new ObjectInputStream(fis);
@@ -219,11 +214,15 @@ public class JeuTerminal implements Serializable{
         	
         	ois.close();
         } catch (FileNotFoundException e) {
-			System.out.println(e);
+			System.out.println("Il n'y a pas de sauvegarde");
 		} catch(IOException e) {
-			System.out.println(e);
+			File file = new File("src/Save.ser");
+   		 
+    		if (file.length() == 0) {
+    			System.out.println("Il n'y a pas de sauvegarde");
+    		}
         } catch (ClassNotFoundException e) {
-        	System.out.println(e);
+        	System.out.println("test3");
 		}
     }
     
@@ -257,16 +256,23 @@ public class JeuTerminal implements Serializable{
     }
     
     public void resetSave() {
-    	try {
-    		PrintWriter writer = new PrintWriter("src/Save.ser");
-        	writer.print("");
-        	writer.close();
-        	for (Niveaux niv : niveaux) {
-        		niv.setAsUncleared();
-        		niv.setScore(0);
-        	}
-    	} catch (FileNotFoundException e) {
-    		e.printStackTrace();
-    	}
+    	File file = new File("src/Save.ser");
+		
+		if (file.length() == 0) {
+			System.out.println("Il n'y a pas de sauvegarde");
+		} else {
+	    	try {
+	    		
+	    		PrintWriter writer = new PrintWriter("src/Save.ser");
+	        	writer.print("");
+	        	writer.close();
+	        	for (Niveaux niv : niveaux) {
+	        		niv.setAsUncleared();
+	        		niv.setScore(0);
+	        	}
+	    	} catch (FileNotFoundException e) {
+	    		e.printStackTrace();
+	    	}
+		}
     }
 }
