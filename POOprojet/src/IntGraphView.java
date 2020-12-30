@@ -177,6 +177,7 @@ public class IntGraphView extends JFrame {
         if(n.clear()){
             reset();
             afficheScore();
+            scoreNiv = 0;
             update();
         }else {
             reset();
