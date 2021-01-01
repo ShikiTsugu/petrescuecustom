@@ -19,7 +19,6 @@ public class IntGraphView extends JFrame {
     private JButton retourMenu = new JButton("Retour");
     private int scoreNiv,meilleurScoreNiv,nbScouts;
     private final JeuGraphique jg = new JeuGraphique();
-    private boolean done=false;
 
     public IntGraphView(IntGraphModel m){
         model = m;
@@ -192,8 +191,8 @@ public class IntGraphView extends JFrame {
             update();
         }else {
             reset();
-            nbScouts = n.getPlateau().getNbAnimIni();
             imagePane.setLayout(null);
+            nbScouts = n.getPlateau().getNbAnimIni();
             for (Cube[] c : n.getPlateau().getCubes()) {
                 for (Cube b : c) {
                     if (b != null) {
@@ -215,6 +214,7 @@ public class IntGraphView extends JFrame {
                                 s.calcul(n.getPlateau().nbBlocSuppr());
                                 s.animauxPoint(n.getPlateau().nbAnimauxSuppr());
                                 scoreNiv += s.getScore();
+                                if(n.getPlateau().vide())scoreNiv+=10000;
                                 n.meilleurScore(scoreNiv);
                                 meilleurScoreNiv = n.getScore();
                                 JPanel pnew = initialisationPlateau(n);
@@ -249,7 +249,7 @@ public class IntGraphView extends JFrame {
             bestscore.setFont(new Font("Monospaced", Font.BOLD, 20));
             JLabel score = new JLabel("Score : " + scoreNiv);
             score.setFont(new Font("Monospaced", Font.BOLD, 20));
-            JLabel scout = new JLabel("Scouts : " + n.getPlateau().nbAnimauxSuppr() + "/" + nbScouts);
+            JLabel scout = new JLabel("Scouts : " + n.getPlateau().getNbAnimSuppr() + "/" + nbScouts);
             scout.setFont(new Font("Monospaced", Font.BOLD, 20));
             m.add(bestscore);
             m.add(score);

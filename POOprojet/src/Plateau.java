@@ -5,7 +5,9 @@ public class Plateau {
     private Joueur joueur;
     private Robot robot;
     private int blocIni;
-    private int nbAnimIni;
+    private final int nbAnimIni;
+    private int nbAnimCour;
+    private int nbAnimSuppr;
 
     public Plateau(Cube[][] c){
         cubes = c;
@@ -14,6 +16,12 @@ public class Plateau {
         robot = new Robot();
         blocIni = nbBlocInitial();
         nbAnimIni = nbAnimaux();
+        nbAnimCour = nbAnimIni;
+        nbAnimSuppr = 0;
+    }
+
+    public int getNbAnimSuppr(){
+        return nbAnimSuppr;
     }
 
     public int getNbAnimIni(){
@@ -55,12 +63,14 @@ public class Plateau {
         for(int i = 0; i < cubes[cubes.length-1].length; i++) {
             if (cubes[cubes.length-1][i] instanceof Animaux) {
                 cubes[cubes.length-1][i] = null;
+                nbAnimSuppr++;
             }
         }
     }
 
     public int nbAnimauxSuppr() {
-    	int AnimSuppr = 0;
+        int AnimSuppr = 0;
+        int AnimCourant = nbAnimCour;
         for(Cube[]c : cubes){
             for(Cube d : c){
                 try{
@@ -70,8 +80,9 @@ public class Plateau {
                 }catch(NullPointerException e){}
             }
         }
+        nbAnimCour = AnimSuppr;
         miseAJour();
-        return nbAnimIni-AnimSuppr;
+        return AnimCourant-AnimSuppr;
     }
 
     //compte le nombre de bloc non null et qui n'est pas un obstacle initialement
@@ -291,6 +302,7 @@ public class Plateau {
 			}
 		}
     	blocIni = nbBlocInitial();
-        nbAnimIni = nbAnimaux();
+        nbAnimCour = nbAnimaux();
+        nbAnimSuppr = 0;
     }
 }

@@ -167,7 +167,7 @@ public class JeuTerminal implements Serializable{
                     s.animauxPoint(niv.getPlateau().nbAnimauxSuppr());
                     score = s.getScore();
                     System.out.println("Score : " + score);
-                    System.out.println("Animaux : "+niv.getPlateau().nbAnimauxSuppr()+"/"+animIni);
+                    System.out.println("Animaux : "+niv.getPlateau().getNbAnimSuppr()+"/"+animIni);
                     niv.getPlateau().miseAJour();
                     niv.getPlateau().affiche();
                 }
