@@ -55,4 +55,8 @@ public class Niveaux {
         System.out.print("Niveau "+niveau+" : ");
         return clear?"Terminé, meilleur score : "+score : "Non terminé.";
     }
+    
+    public void resetPlateau() {
+    	plateau.resetPlateau();
+    }
 }

@@ -1,6 +1,7 @@
 public class Plateau {
 	
     private Cube[][] cubes;
+    private SavePlateau save;
     private Joueur joueur;
     private Robot robot;
     private int blocIni;
@@ -8,6 +9,7 @@ public class Plateau {
 
     public Plateau(Cube[][] c){
         cubes = c;
+        save = new SavePlateau(c);
         joueur = new Joueur();
         robot = new Robot();
         blocIni = nbBlocInitial();
@@ -280,5 +282,15 @@ public class Plateau {
     	if(x < 0 || x > cubes.length-1 || y < 0 || y > cubes[x].length-1)
     		return true;
     	return false;
+    }
+    
+    public void resetPlateau() {
+    	for (int x = 0; x < save.getSave().length; x++) {
+			for (int y = 0; y < save.getSave()[0].length; y++) {
+				cubes[x][y] = save.getSave()[x][y];
+			}
+		}
+    	blocIni = nbBlocInitial();
+        nbAnimIni = nbAnimaux();
     }
 }
