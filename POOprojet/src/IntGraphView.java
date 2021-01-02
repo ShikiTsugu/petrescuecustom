@@ -63,7 +63,7 @@ public class IntGraphView extends JFrame {
         quitter.setBackground(new Color(95,105,60));
         quitter.setForeground(Color.WHITE);
 
-        titre.setIcon(new ImageIcon("logo.png"));
+        titre.setIcon(new ImageIcon("src/logo.png"));
 
         imagePane = new ImagePane();
 
@@ -128,35 +128,35 @@ public class IntGraphView extends JFrame {
             JButton r = new JButton();
             r.setContentAreaFilled(false);
             r.setOpaque(false);
-            r.setIcon(new ImageIcon("red.png"));
+            r.setIcon(new ImageIcon("src/red.png"));
             return r;
         }
         if(b.getColor().equals("G")){
             JButton g = new JButton();
             g.setContentAreaFilled(false);
             g.setOpaque(false);
-            g.setIcon(new ImageIcon("green.png"));
+            g.setIcon(new ImageIcon("src/green.png"));
             return g;
         }
         if(b.getColor().equals("Y")){
             JButton y = new JButton();
             y.setContentAreaFilled(false);
             y.setOpaque(false);
-            y.setIcon(new ImageIcon("yellow.png"));
+            y.setIcon(new ImageIcon("src/yellow.png"));
             return y;
         }
         if(b.getColor().equals("B")){
             JButton bl = new JButton();
             bl.setContentAreaFilled(false);
             bl.setOpaque(false);
-            bl.setIcon(new ImageIcon("blue.png"));
+            bl.setIcon(new ImageIcon("src/blue.png"));
             return bl;
         }
         if(b.getColor().equals("P")){
             JButton p = new JButton();
             p.setContentAreaFilled(false);
             p.setOpaque(false);
-            p.setIcon(new ImageIcon("purple.png"));
+            p.setIcon(new ImageIcon("src/purple.png"));
             return p;
         }
         return null;
@@ -186,9 +186,13 @@ public class IntGraphView extends JFrame {
         if(n.clear()){
             reset();
             afficheScore(n);
+            jg.saveNiv();
+            jg.Save();
+            n.resetPlateau();
             scoreNiv = 0;
             meilleurScoreNiv = 0;
             update();
+            System.out.println("Progression sauvegardé.");
         }else {
             reset();
             imagePane.setLayout(null);
@@ -202,7 +206,7 @@ public class IntGraphView extends JFrame {
                             a.setContentAreaFilled(false);
                             a.setFocusPainted(false);
                             a.setOpaque(false);
-                            a.setIcon(new ImageIcon("levi.png"));
+                            a.setIcon(new ImageIcon("src/levi.png"));
                             p.add(a);
                         }
                         if (b instanceof Bloc) {
@@ -228,7 +232,7 @@ public class IntGraphView extends JFrame {
                             o.setContentAreaFilled(false);
                             o.setFocusPainted(false);
                             o.setOpaque(false);
-                            o.setIcon(new ImageIcon("obstacle.png"));
+                            o.setIcon(new ImageIcon("src/obstacle.png"));
                             p.add(o);
                         }
                     } else {
@@ -293,7 +297,6 @@ public class IntGraphView extends JFrame {
     public void affichemenu() {
         reset();
         niveauxDispo();
-
         retour.setFont(new Font("Monospaced",Font.BOLD,20));
         retour.setBackground(new Color(95,105,60));
         retour.setForeground(Color.WHITE);

@@ -1,7 +1,16 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class JeuGraphique {
     private ArrayList<Niveaux> niveaux = new ArrayList<>();
+    private Save save = new Save();
     private Cube r = new Bloc(0,0,"R");
     private Cube g = new Bloc(0,0,"G");
     private Cube y = new Bloc(0,0,"Y");
@@ -27,6 +36,9 @@ public class JeuGraphique {
         Niveaux.resetCompteur();
         Niveaux n1 = new Niveaux(p1);Niveaux n2 = new Niveaux(p2);Niveaux n3 = new Niveaux(p3);Niveaux n4 = new Niveaux(p4);
         niveaux.add(n1);niveaux.add(n2);niveaux.add(n3);niveaux.add(n4);
+        addNivtoSave();
+        Load();
+    	loadSave();
     }
 
     public ArrayList<Niveaux> getNiveaux(){
@@ -34,10 +46,96 @@ public class JeuGraphique {
     }
 
     public void jouer(){
-        IntGraphModel im = new IntGraphModel("background.png");
+        IntGraphModel im = new IntGraphModel("src/background.png");
         IntGraphView iv = new IntGraphView(im);
         IntGraphControl ic = new IntGraphControl(im,iv);
         iv.pack();
         iv.setVisible(true);
+    }
+    
+    public void Save() {
+    	try {
+        	FileOutputStream fos = new FileOutputStream("src/Save.ser");
+        	
+        	ObjectOutputStream oos = new ObjectOutputStream(fos);
+        	
+        	oos.writeObject(save);
+        	
+        	oos.close();
+        } catch(IOException e) {
+        	e.printStackTrace();
+        }
+    }
+    
+    public void Load() {
+    	try {
+        	FileInputStream fis = new FileInputStream("src/Save.ser");
+        	
+        	ObjectInputStream ois = new ObjectInputStream(fis);
+        	
+        	save = (((Save)ois.readObject()));
+        	
+        	ois.close();
+        } catch (FileNotFoundException e) {
+        	System.out.println(e);
+		} catch(IOException e) {
+			File file = new File("src/Save.ser");
+   		 
+    		if (file.length() == 0) {
+    			System.out.println(e);
+    		}
+        } catch (ClassNotFoundException e) {
+        	System.out.println(e);
+		}
+    }
+    
+    public void saveNiv() {
+    	for (Niveaux niv : niveaux) {
+    		save.setNiveauClear(niv.getClear(),niv.getNum()-1);
+    		save.setNiveauScore(niv.getScore(),niv.getNum()-1);
+    	}
+    }
+    
+    public void addNivtoSave() {
+    	for (Niveaux niv : niveaux) {
+    		save.addNiveauClear(niv.getClear());
+    		save.addNiveauScore(niv.getScore());
+    	}
+    }
+    
+    public void loadSave() {
+    	int i = 0;
+    	for (boolean nivclear : save.getNiveauxClear()) {
+    		if (nivclear) {
+    			niveaux.get(i).setAsCleared();
+    		}
+    		i++;
+    	}
+    	i = 0;
+    	for (int nivscore : save.getNiveauxScore()) {
+    		niveaux.get(i).meilleurScore(nivscore);
+    		i++;
+    	}
+    }
+    
+    public void resetSave() {
+    	File file = new File("src/Save.ser");
+		
+		if (file.length() == 0) {
+			System.out.println("Il n'y a pas de sauvegarde");
+		} else {
+	    	try {
+	    		
+	    		PrintWriter writer = new PrintWriter("src/Save.ser");
+	        	writer.print("");
+	        	writer.close();
+	        	for (Niveaux niv : niveaux) {
+	        		niv.setAsUncleared();
+	        		niv.setScore(0);
+	        	}
+	    	} catch (FileNotFoundException e) {
+	    		e.printStackTrace();
+	    	}
+		}
     }
 }
