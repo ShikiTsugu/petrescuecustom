@@ -46,7 +46,7 @@ public class JeuGraphique {
     }
 
     public void jouer(){
-        IntGraphModel im = new IntGraphModel("src/background.png");
+        IntGraphModel im = new IntGraphModel("background.png");
         IntGraphView iv = new IntGraphView(im);
         IntGraphControl ic = new IntGraphControl(im,iv);
         iv.pack();
@@ -55,7 +55,7 @@ public class JeuGraphique {
     
     public void Save() {
     	try {
-        	FileOutputStream fos = new FileOutputStream("src/Save.ser");
+        	FileOutputStream fos = new FileOutputStream("Save.ser");
         	
         	ObjectOutputStream oos = new ObjectOutputStream(fos);
         	
@@ -69,7 +69,7 @@ public class JeuGraphique {
     
     public void Load() {
     	try {
-        	FileInputStream fis = new FileInputStream("src/Save.ser");
+        	FileInputStream fis = new FileInputStream("Save.ser");
         	
         	ObjectInputStream ois = new ObjectInputStream(fis);
         	
@@ -79,7 +79,7 @@ public class JeuGraphique {
         } catch (FileNotFoundException e) {
         	System.out.println(e);
 		} catch(IOException e) {
-			File file = new File("src/Save.ser");
+			File file = new File("Save.ser");
    		 
     		if (file.length() == 0) {
     			System.out.println(e);
@@ -119,14 +119,14 @@ public class JeuGraphique {
     }
     
     public void resetSave() {
-    	File file = new File("src/Save.ser");
+    	File file = new File("Save.ser");
 		
 		if (file.length() == 0) {
 			System.out.println("Il n'y a pas de sauvegarde");
 		} else {
 	    	try {
 	    		
-	    		PrintWriter writer = new PrintWriter("src/Save.ser");
+	    		PrintWriter writer = new PrintWriter("Save.ser");
 	        	writer.print("");
 	        	writer.close();
 	        	for (Niveaux niv : niveaux) {
