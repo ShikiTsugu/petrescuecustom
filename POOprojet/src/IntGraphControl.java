@@ -12,7 +12,7 @@ public class IntGraphControl {
         view.getRetour().addActionListener((ActionEvent e) -> retour());
         view.getNewPartie().addActionListener((ActionEvent e) -> {
         	view.getJg().resetSave();
-        	view.niveauxDispo();
+            jouer();
         });
         view.getRetourMenu().addActionListener((ActionEvent e) -> {
             view.reset();
