@@ -16,6 +16,7 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/zhangs/projet-poo.gi
 I recommand using HTTPS, I never had any issue with it.
 
 2. Put the file in your IDE (make sure to put the file in the correct repository)
- 
 
-3. Run the Code and enjoy the Game 
+ Note : if you are running the game on a terminal, make sure that the PNG file are in the same repertory as your JAVA files
+
+3. Run the "Jeu.java" file and enjoy the Game !
